@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1091681472387",
+    "project_id": "aspiration-classes-dev",
+    "storage_bucket": "aspiration-classes-dev.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1091681472387:android:3d36341dd04a60f25130b6",
+        "android_client_info": {
+          "package_name": "com.fabtech.fabtech_aspirationclass_dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1091681472387-orbv4ldhanh9s48uok96avjseqvtp9sa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDJNLE7hX0WOJz5tPhAhSlmPizAkqZGPoo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1091681472387-orbv4ldhanh9s48uok96avjseqvtp9sa.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
