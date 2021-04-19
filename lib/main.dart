@@ -51,7 +51,13 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
-          primarySwatch: Colors.blue,
+          primaryColor: Colors.white,
+          accentColor: Colors.teal.shade400,
+          appBarTheme: AppBarTheme(
+            backgroundColor: Colors.purple,
+            elevation: 0,
+            textTheme: TextTheme(headline6: TextStyle(color: Colors.white,fontSize: 20)),
+          ),
         ),
         home: Wrapper(),
         builder: EasyLoading.init(),

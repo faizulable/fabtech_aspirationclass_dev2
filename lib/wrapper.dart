@@ -84,3 +84,66 @@ class _LoadingScreenState extends State<LoadingScreen> {
     maskType: EasyLoadingMaskType.none);
   }
 }
+
+class NoInternet extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        width: MediaQuery.of(context).size.width,
+    height: MediaQuery.of(context).size.height,
+    decoration: BoxDecoration(
+      gradient: LinearGradient(
+      begin: Alignment.topLeft,
+      end: Alignment.bottomRight,
+      colors: [Colors.deepPurple.shade600, Colors.teal.shade400]
+        ),
+      ),
+      child: Center(
+        child: Container(
+          width: MediaQuery.of(context).size.width/2 + 100,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                width: MediaQuery.of(context).size.width/2 + 100,
+                height: MediaQuery.of(context).size.width/2 + 100,
+                decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.purpleAccent,
+                        spreadRadius: 3,
+                        blurRadius: 5,
+                        offset: Offset(0, 1), // changes position of shadow
+                      ),
+                    ],
+                    color: Colors.white,
+                    image: DecorationImage(
+                        image: AssetImage('images/emblame.png'),
+                        fit: BoxFit.fill
+                    ),
+                    shape: BoxShape.circle
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Center(
+                child: ListTile(
+                  leading: Icon(Icons.wifi_off,color: Colors.white,size: 20,),
+                  minLeadingWidth: 10,
+                  title: Text('No Internet Connection',
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
