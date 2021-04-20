@@ -6,42 +6,20 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fabtech_aspirationclass_dev/utilites/widgets/BaseContainerL.dart';
 import 'package:fabtech_aspirationclass_dev/utilites/widgets/BaseContainerR.dart';
-import 'package:fabtech_aspirationclass_dev/screens/auth/register.dart';
 
-class SignInPage extends StatefulWidget {
+class RegisterPage extends StatefulWidget {
   @override
-  _SignInPageState createState() => _SignInPageState();
+  _RegisterPageState createState() => _RegisterPageState();
 }
 
-class _SignInPageState extends State<SignInPage> {
+class _RegisterPageState extends State<RegisterPage> {
 
   AuthService _auth = AuthService();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(('Aspiration SignIn')),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 5,horizontal: 5),
-            child: ElevatedButton.icon(
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(Colors.teal.shade400),
-                shape: MaterialStateProperty.all<OutlinedBorder>(
-                  RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20),),
-                  ),
-                ),
-              ),
-              icon: Icon(Icons.group_add_rounded),
-              label: Text('Center'),
-              onPressed: () async {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return RegisterPage();
-                }));
-              },
-            ),
-          ),
-        ],
+        title: Text(('New Center')),
       ),
       body: Container(
         width: MediaQuery.of(context).size.width,
@@ -127,7 +105,132 @@ class _SignInBodyState extends State<SignInBody> {
                   child: Padding(
                     padding: const EdgeInsets.all(2.0),
                     child: Center(
-                      child: Text('Email ID',
+                      child: Text('Center Name',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                        ),
+                      ),
+                    ),
+                  ),
+                  painter: RPSCustomPainter(),
+                ),
+                SizedBox(height: 5,),
+                Center(
+                  child: TextFormField(
+                    decoration: inputNameDecoration,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        SizedBox(height: 10,),
+        BaseContainerRight(
+          child: Padding(
+            padding: const EdgeInsets.all(5.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CustomPaint(
+                  child: Padding(
+                    padding: const EdgeInsets.all(2.0),
+                    child: Center(
+                      child: Text('Address',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                        ),
+                      ),
+                    ),
+                  ),
+                  painter: RPSCustomPainter(),
+                ),
+                SizedBox(height: 5,),
+                Center(
+                  child: TextFormField(
+                    decoration: inputAddressDecoration,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        SizedBox(height: 10,),
+        BaseContainerRight(
+          child: Padding(
+            padding: const EdgeInsets.all(5.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CustomPaint(
+                  child: Padding(
+                    padding: const EdgeInsets.all(2.0),
+                    child: Center(
+                      child: Text('Contact Number',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                        ),
+                      ),
+                    ),
+                  ),
+                  painter: RPSCustomPainter(),
+                ),
+                SizedBox(height: 5,),
+                Center(
+                  child: TextFormField(
+                    keyboardType: TextInputType.number,
+                    decoration: inputContactDecoration,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        SizedBox(height: 10,),
+        BaseContainerRight(
+          child: Padding(
+            padding: const EdgeInsets.all(5.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CustomPaint(
+                  child: Padding(
+                    padding: const EdgeInsets.all(2.0),
+                    child: Center(
+                      child: Text('Email Id',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                        ),
+                      ),
+                    ),
+                  ),
+                  painter: RPSCustomPainter(),
+                ),
+                SizedBox(height: 5,),
+                Center(
+                  child: TextFormField(
+                    decoration: inputEmailDecoration,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        SizedBox(height: 10,),
+        BaseContainerRight(
+          child: Padding(
+            padding: const EdgeInsets.all(5.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CustomPaint(
+                  child: Padding(
+                    padding: const EdgeInsets.all(2.0),
+                    child: Center(
+                      child: Text('Confirm Email Id',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 20,
@@ -179,6 +282,37 @@ class _SignInBodyState extends State<SignInBody> {
           ),
         ),
         SizedBox(height: 10,),
+        BaseContainerRight(
+          child: Padding(
+            padding: const EdgeInsets.all(5.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CustomPaint(
+                  child: Padding(
+                    padding: const EdgeInsets.all(2.0),
+                    child: Center(
+                      child: Text('Confirm Password',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                        ),
+                      ),
+                    ),
+                  ),
+                  painter: RPSCustomPainter(),
+                ),
+                SizedBox(height: 5,),
+                Center(
+                  child: TextFormField(
+                    decoration: inputPasswordDecoration,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        SizedBox(height: 10,),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 50),
           child: ElevatedButton.icon(
@@ -190,7 +324,7 @@ class _SignInBodyState extends State<SignInBody> {
               ),
             ),
             icon: Icon(Icons.assignment_ind_rounded),
-            label: Text('SignIn Anon'),
+            label: Text('Register'),
             onPressed: () async {
               dynamic result = await widget.auth.signInAnon();
               if(result == null)
