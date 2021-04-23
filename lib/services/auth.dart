@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fabtech_aspirationclass_dev/models/appUser.dart';
+import 'package:flutter/cupertino.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -32,8 +33,44 @@ class AuthService {
     }
   }
   //SignIn with Email and Password
+  Future<dynamic> signInWithEmailAndPassword(String email,String password) async
+  {
+    try{
+      UserCredential result = await _auth.signInWithEmailAndPassword(email: email, password: password);
+      return _userFromFirebaseCredential(result);
+    } on FirebaseAuthException catch(e){
+      print('Firebase Error Code = '+e.code);
+      if(e.code == 'invalid-email'){
+        return 'invalid EmailID.';
+      } else if(e.code == 'user-not-found'){
+        return 'User is not registered, user not found.';
+      } else if(e.code == 'wrong-password'){
+        return 'Wrong password provided for that user.';
+      }
+    } catch(e){
+      print(e.toString());
+      return null;
+    }
+  }
 
   // SignUp with Email and Password
+  Future<dynamic> registerWithEmailAndPassword(String email,String password) async
+  {
+    try{
+      UserCredential result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
+      return _userFromFirebaseCredential(result);
+    } on FirebaseAuthException catch(e){
+      print('Firebase Error Code = '+e.code);
+      if(e.code == 'invalid-email'){
+        return 'invalid EmailID.';
+      } else if(e.code == 'email-already-in-use'){
+        return 'EmailId is already registered.';
+      }
+    } catch(e){
+      print(e.toString());
+      return null;
+    }
+  }
 
   //SignOut
   Future signOut() async{

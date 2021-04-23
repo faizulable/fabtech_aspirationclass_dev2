@@ -7,8 +7,10 @@ import 'package:flutter/material.dart';
 import 'package:fabtech_aspirationclass_dev/utilites/widgets/BaseContainerL.dart';
 import 'package:fabtech_aspirationclass_dev/utilites/widgets/BaseContainerR.dart';
 import 'package:fabtech_aspirationclass_dev/screens/auth/register.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class SignInPage extends StatefulWidget {
+
   @override
   _SignInPageState createState() => _SignInPageState();
 }
@@ -88,122 +90,143 @@ class SignInBody extends StatefulWidget {
   _SignInBodyState createState() => _SignInBodyState();
 }
 class _SignInBodyState extends State<SignInBody> {
+  final _formKey = GlobalKey<FormState>();
+  String _emailId, _password = '';
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(5.0),
-          child: Container(
-            height: 150,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(20)),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black54,
-                    spreadRadius: 3,
-                    blurRadius: 5,
-                    offset: Offset(0, 1), // changes position of shadow
-                  ),
-                ],
-                color: Colors.white,
-                image: DecorationImage(
-                    image: AssetImage('images/banner.png'),
-                    fit: BoxFit.fill
-                ),
-                shape: BoxShape.rectangle
-            ),
-          ),
-        ),
-        SizedBox(height: 15,),
-        BaseContainerLeft(
-          child: Padding(
+    return Form(
+      key: _formKey,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Padding(
             padding: const EdgeInsets.all(5.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                CustomPaint(
-                  child: Padding(
-                    padding: const EdgeInsets.all(2.0),
-                    child: Center(
-                      child: Text('Email ID',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                        ),
-                      ),
+            child: Container(
+              height: 150,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black54,
+                      spreadRadius: 3,
+                      blurRadius: 5,
+                      offset: Offset(0, 1), // changes position of shadow
                     ),
+                  ],
+                  color: Colors.white,
+                  image: DecorationImage(
+                      image: AssetImage('images/banner.png'),
+                      fit: BoxFit.fill
                   ),
-                  painter: RPSCustomPainter(),
-                ),
-                SizedBox(height: 5,),
-                Center(
-                  child: TextFormField(
-                    decoration: inputEmailDecoration,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-        SizedBox(height: 10,),
-        BaseContainerRight(
-          child: Padding(
-            padding: const EdgeInsets.all(5.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                CustomPaint(
-                  child: Padding(
-                    padding: const EdgeInsets.all(2.0),
-                    child: Center(
-                      child: Text('Password',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                        ),
-                      ),
-                    ),
-                  ),
-                  painter: RPSCustomPainter(),
-                ),
-                SizedBox(height: 5,),
-                Center(
-                  child: TextFormField(
-                    decoration: inputPasswordDecoration,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-        SizedBox(height: 10,),
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 50),
-          child: ElevatedButton.icon(
-            style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all<Color>(Colors.teal.shade400),
-              shape: MaterialStateProperty.all<OutlinedBorder>(
-                RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20),),
-                ),
+                  shape: BoxShape.rectangle
               ),
             ),
-            icon: Icon(Icons.assignment_ind_rounded),
-            label: Text('SignIn Anon'),
-            onPressed: () async {
-              dynamic result = await widget.auth.signInAnon();
-              if(result == null)
-              {
-                print('Error Signing in');
-              } else {
-                AppUser userdata = result;
-                print('Signing in successful:' + userdata.uid);
-              }
-            },
           ),
-        ),
-      ],
+          SizedBox(height: 15,),
+          BaseContainerLeft(
+            child: Padding(
+              padding: const EdgeInsets.all(5.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CustomPaint(
+                    child: Padding(
+                      padding: const EdgeInsets.all(2.0),
+                      child: Center(
+                        child: Text('Email ID',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                          ),
+                        ),
+                      ),
+                    ),
+                    painter: RPSCustomPainter(),
+                  ),
+                  SizedBox(height: 5,),
+                  Center(
+                    child: TextFormField(
+                      decoration: inputEmailDecoration,
+                      onSaved: (input) => _emailId = input,
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Please enter your EmailID';
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          SizedBox(height: 10,),
+          BaseContainerRight(
+            child: Padding(
+              padding: const EdgeInsets.all(5.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CustomPaint(
+                    child: Padding(
+                      padding: const EdgeInsets.all(2.0),
+                      child: Center(
+                        child: Text('Password',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                          ),
+                        ),
+                      ),
+                    ),
+                    painter: RPSCustomPainter(),
+                  ),
+                  SizedBox(height: 5,),
+                  Center(
+                    child: TextFormField(
+                      decoration: inputPasswordDecoration,
+                      onSaved: (input) => _password = input,
+                      validator: (value) {
+                        if (value.isEmpty || value.length < 6) {
+                          return 'Password min length is 6';
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          SizedBox(height: 10,),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 50),
+            child: ElevatedButton.icon(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color>(Colors.teal.shade400),
+                shape: MaterialStateProperty.all<OutlinedBorder>(
+                  RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20),),
+                  ),
+                ),
+              ),
+              icon: Icon(Icons.assignment_ind_rounded),
+              label: Text('SignIn'),
+              onPressed: () async {
+                if(_formKey.currentState.validate()){
+                  _formKey.currentState.save();
+                  dynamic result = await widget.auth.signInWithEmailAndPassword(_emailId, _password);
+                  if(result is String) {
+                    /*_timer?.cancel();*/
+                    EasyLoading.showToast(result);
+                  } else {
+                    //successful login do nothing
+                  }
+                }
+              },
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

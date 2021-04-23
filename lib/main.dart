@@ -2,6 +2,7 @@ import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:fabtech_aspirationclass_dev/models/appUser.dart';
 import 'package:fabtech_aspirationclass_dev/services/auth.dart';
 import 'package:fabtech_aspirationclass_dev/services/dataConnectivity.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fabtech_aspirationclass_dev/wrapper.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +29,9 @@ void configLoading() {
     ..textColor = Colors.yellow
     ..maskColor = Colors.black26.withOpacity(0.5)
     ..userInteractions = true
+    ..toastPosition = EasyLoadingToastPosition.bottom
     ..dismissOnTap = false;
+
 }
 
 class MyApp extends StatelessWidget {

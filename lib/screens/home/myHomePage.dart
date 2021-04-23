@@ -1,5 +1,7 @@
 import 'package:fabtech_aspirationclass_dev/services/auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fabtech_aspirationclass_dev/screens/auth/singIn.dart';
+import 'package:fabtech_aspirationclass_dev/wrapper.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
@@ -51,6 +53,11 @@ class _MyHomePageState extends State<MyHomePage> {
               icon: Icon(Icons.exit_to_app),
               onPressed: () async {
                 await _auth.signOut();
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => Wrapper()),
+                      (Route<dynamic> route) => false,
+                );
               },
               label: Text('logout'),
           ),

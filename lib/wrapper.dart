@@ -6,8 +6,10 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+/*
 class Wrapper extends StatelessWidget {
 
+  bool showSignIn = true;
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +19,11 @@ class Wrapper extends StatelessWidget {
     if(connectivity == DataConnectionStatus.connected){
       EasyLoading.dismiss();
       if (user == null) {
-        return SignInPage();
+        if(showSignIn) {
+          return SignInPage();
+        }else{
+          return RegisterPage();
+        }
       } else {
         return MyHomePage(title: 'Home',);
       }
@@ -34,6 +40,37 @@ class Wrapper extends StatelessWidget {
     }
   }
 }
+*/
+
+class Wrapper extends StatefulWidget {
+  @override
+  _WrapperState createState() => _WrapperState();
+}
+
+class _WrapperState extends State<Wrapper> {
+  @override
+  Widget build(BuildContext context) {
+
+    final AppUser user = Provider.of<AppUser>(context);
+    final DataConnectionStatus connectivity = Provider.of<DataConnectionStatus>(context);
+    print(user);
+    if(connectivity == DataConnectionStatus.connected){
+      EasyLoading.dismiss();
+      if (user == null) {
+          return SignInPage();
+      } else {
+        return MyHomePage(title: 'Home');
+      }
+    } else if(connectivity == DataConnectionStatus.disconnected){
+      EasyLoading.dismiss();
+      return NoInternet();
+    }
+    else {
+      return LoadingScreen();
+    }
+  }
+}
+
 
 class LoadingScreen extends StatefulWidget {
   @override
