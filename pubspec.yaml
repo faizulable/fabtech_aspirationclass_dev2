@@ -33,6 +33,8 @@ dependencies:
   firebase_auth: 1.1.0
   provider: 5.0.0
   flutter_easyloading: 2.2.2
+  http: 0.13.1
+  shared_preferences: 2.0.5
 
 dev_dependencies:
   flutter_test:

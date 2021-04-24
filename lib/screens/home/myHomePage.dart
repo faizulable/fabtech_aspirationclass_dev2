@@ -1,7 +1,8 @@
 import 'package:fabtech_aspirationclass_dev/services/auth.dart';
 import 'package:flutter/material.dart';
-import 'package:fabtech_aspirationclass_dev/screens/auth/singIn.dart';
 import 'package:fabtech_aspirationclass_dev/wrapper.dart';
+import 'package:fabtech_aspirationclass_dev/main.dart';
+import 'package:fabtech_aspirationclass_dev/models/appPref.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
@@ -90,6 +91,9 @@ class _MyHomePageState extends State<MyHomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.headline4,
             ),
+            Text(sp.getString(AppPref.centerNamePref) ?? 'BLANK'),
+            Text(sp.getString(AppPref.emailPref) ?? 'BLANK'),
+            Text(sp.getString(AppPref.centerIdPref) ?? 'BLANK'),
           ],
         ),
       ),

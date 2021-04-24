@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
 
+const kRootlink = "https://blowziest-dam.000webhostapp.com/AspirationClass/";
+const kRegisterUser = 'registration.php';
+const kDeleteRegRequest = 'deleteRegReqst.php';
+const kSignIn = 'signIn.php';
+
+
 const inputEmailDecoration = InputDecoration(
   filled: true,
   fillColor: Colors.white,

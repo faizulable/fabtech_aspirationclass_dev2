@@ -185,6 +185,7 @@ class _SignInBodyState extends State<SignInBody> {
                   Center(
                     child: TextFormField(
                       decoration: inputPasswordDecoration,
+                      obscureText: true,
                       onSaved: (input) => _password = input,
                       validator: (value) {
                         if (value.isEmpty || value.length < 6) {
@@ -214,9 +215,10 @@ class _SignInBodyState extends State<SignInBody> {
               onPressed: () async {
                 if(_formKey.currentState.validate()){
                   _formKey.currentState.save();
+                  EasyLoading.show(status: 'Wait..',maskType: EasyLoadingMaskType.none);
                   dynamic result = await widget.auth.signInWithEmailAndPassword(_emailId, _password);
+                  EasyLoading.dismiss();
                   if(result is String) {
-                    /*_timer?.cancel();*/
                     EasyLoading.showToast(result);
                   } else {
                     //successful login do nothing

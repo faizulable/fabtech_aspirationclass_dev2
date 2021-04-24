@@ -70,7 +70,9 @@ class SignInBody extends StatefulWidget {
 }
 class _SignInBodyState extends State<SignInBody> {
   final _formKey = GlobalKey<FormState>();
-  String _emailId, _password = '';
+  String _emailId, _password,_centerName,_address,_contactNumber = '';
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
 
 
   @override
@@ -128,6 +130,16 @@ class _SignInBodyState extends State<SignInBody> {
                   Center(
                     child: TextFormField(
                       decoration: inputNameDecoration,
+                      onSaved: (input) => _centerName = input,
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Please enter your company Name';
+                        }
+                        if (value.length > 50) {
+                          return 'Max length is 50';
+                        }
+                        return null;
+                      },
                     ),
                   ),
                 ],
@@ -159,6 +171,16 @@ class _SignInBodyState extends State<SignInBody> {
                   Center(
                     child: TextFormField(
                       decoration: inputAddressDecoration,
+                      onSaved: (input) => _address = input,
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Please enter Address';
+                        }
+                        if (value.length > 100) {
+                          return 'Max length is 50';
+                        }
+                        return null;
+                      },
                     ),
                   ),
                 ],
@@ -191,6 +213,16 @@ class _SignInBodyState extends State<SignInBody> {
                     child: TextFormField(
                       keyboardType: TextInputType.number,
                       decoration: inputContactDecoration,
+                      onSaved: (input) => _contactNumber = input,
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Please enter Contact Number';
+                        }
+                        if (value.length != 10) {
+                          return 'Invalid Contact Number';
+                        }
+                        return null;
+                      },
                     ),
                   ),
                 ],
@@ -222,6 +254,7 @@ class _SignInBodyState extends State<SignInBody> {
                   Center(
                     child: TextFormField(
                       decoration: inputEmailDecoration,
+                      controller: emailController,
                       onSaved: (input) => _emailId = input,
                       validator: (value) {
                         if (value.isEmpty) {
@@ -260,6 +293,15 @@ class _SignInBodyState extends State<SignInBody> {
                   Center(
                     child: TextFormField(
                       decoration: inputEmailDecoration,
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Please enter EmailId';
+                        }
+                        if (value != emailController.text) {
+                          return 'EmailID is not matching';
+                        }
+                        return null;
+                      },
                     ),
                   ),
                 ],
@@ -290,7 +332,9 @@ class _SignInBodyState extends State<SignInBody> {
                   SizedBox(height: 5,),
                   Center(
                     child: TextFormField(
+                      controller: passwordController,
                       decoration: inputPasswordDecoration,
+                      obscureText: true,
                       onSaved: (input) => _password = input,
                       validator: (value) {
                         if (value.isEmpty || value.length < 6) {
@@ -329,6 +373,17 @@ class _SignInBodyState extends State<SignInBody> {
                   Center(
                     child: TextFormField(
                       decoration: inputPasswordDecoration,
+                      obscureText: true,
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Please confirm Password';
+                        }
+                        if (value !=
+                            passwordController.text) {
+                          return 'Password is not matching';
+                        }
+                        return null;
+                      },
                     ),
                   ),
                 ],
@@ -349,14 +404,15 @@ class _SignInBodyState extends State<SignInBody> {
               icon: Icon(Icons.assignment_ind_rounded),
               label: Text('Register'),
               onPressed: () async {
-                Timer _timer;
+
                 if(_formKey.currentState.validate()){
                   _formKey.currentState.save();
-                  print('EmailId: '+_emailId);
-                  print('Password: '+_password);
-                  dynamic result = await widget.auth.registerWithEmailAndPassword(_emailId, _password);
+                  EasyLoading.show(status: 'Wait..',maskType: EasyLoadingMaskType.none);
+                  /*print('EmailId: '+_emailId);
+                  print('Password: '+_password);*/
+                  dynamic result = await widget.auth.registerWithEmailAndPassword(_emailId,_password,_centerName,_address,_contactNumber);
+                  EasyLoading.dismiss();
                   if(result is String) {
-                    /*_timer?.cancel();*/
                     EasyLoading.showToast(result);
                   } else {
                     //successful login
