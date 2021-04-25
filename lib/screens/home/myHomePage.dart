@@ -4,6 +4,7 @@ import 'package:fabtech_aspirationclass_dev/wrapper.dart';
 import 'package:fabtech_aspirationclass_dev/main.dart';
 import 'package:fabtech_aspirationclass_dev/models/appPref.dart';
 import 'package:fabtech_aspirationclass_dev/customPainter/LabelCustomPainter.dart';
+import 'package:fabtech_aspirationclass_dev/screens/home/gridWidget.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
@@ -15,6 +16,21 @@ class MyHomePage extends StatefulWidget {
 }
 class _MyHomePageState extends State<MyHomePage> {
   AuthService _auth = AuthService();
+  List<ClassList> classList;
+
+  @override
+  void initState() {
+    super.initState();
+    classList =[];
+    classList.add(ClassList('5','50'));
+    classList.add(ClassList('6','35'));
+    classList.add(ClassList('7','40'));
+    classList.add(ClassList('8','53'));
+    classList.add(ClassList('9','45'));
+    classList.add(ClassList('10','60'));
+    classList.add(ClassList('11','87'));
+    classList.add(ClassList('12','69'));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -138,9 +154,32 @@ class _MyHomePageState extends State<MyHomePage> {
                 painter: RPSCustomPainter(),
               ),
             ),
+            Expanded(
+              child: GridView.builder(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2
+                  ),
+                  itemCount: classList.length,
+                  itemBuilder: (BuildContext context, int index){
+                      return GestureDetector(
+                        child: GridWidget(classNum: classList[index].classNum,
+                            numOfStudents: classList[index].numOfStudents),
+                        onTap: (){
+                          print('class is pressed');
+                        },
+                      );
+                  },
+              ),
+            ),
           ],
         ),
       ),// This trailing comma makes auto-formatting nicer for build methods.
     );
   }
+}
+
+class ClassList
+{
+  final String classNum,numOfStudents;
+  ClassList(this.classNum,this.numOfStudents);
 }
