@@ -54,7 +54,29 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - images/
-  #   - images/a_dot_ham.jpeg
+
+  fonts:
+    - family: LemonMilkBold
+      fonts:
+        - asset: fonts/LemonMilkBold.otf
+    - family: LemonMilkMedium
+      fonts:
+        - asset: fonts/LemonMilkMedium.otf
+    - family: LemonMilkLight
+      fonts:
+        - asset: fonts/LemonMilkLight.otf
+    - family: LandasansLight
+      fonts:
+        - asset: fonts/LandasansLight.otf
+    - family: LandasansMedium
+      fonts:
+        - asset: fonts/LandasansMedium.otf
+    - family: ApeMount
+      fonts:
+        - asset: fonts/ApeMount.otf
+    - family: Overtaking
+      fonts:
+        - asset: fonts/Overtaking.otf
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
