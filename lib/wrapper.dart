@@ -60,7 +60,7 @@ class _WrapperState extends State<Wrapper> {
       if (user == null) {
           return SignInPage();
       } else {
-        return MyHomePage(title: 'Home');
+        return MyHomePage();
         //return GridWidget();
       }
     } else if(connectivity == DataConnectionStatus.disconnected){

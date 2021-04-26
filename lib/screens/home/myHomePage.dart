@@ -1,21 +1,17 @@
-import 'package:fabtech_aspirationclass_dev/services/auth.dart';
 import 'package:flutter/material.dart';
-import 'package:fabtech_aspirationclass_dev/wrapper.dart';
 import 'package:fabtech_aspirationclass_dev/main.dart';
 import 'package:fabtech_aspirationclass_dev/models/appPref.dart';
 import 'package:fabtech_aspirationclass_dev/customPainter/LabelCustomPainter.dart';
 import 'package:fabtech_aspirationclass_dev/screens/home/gridWidget.dart';
+import 'package:fabtech_aspirationclass_dev/utilites/widgets/header.dart';
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  final String title;
+  MyHomePage({Key key}) : super(key: key);
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 class _MyHomePageState extends State<MyHomePage> {
-  AuthService _auth = AuthService();
   List<ClassList> classList;
 
   @override
@@ -35,34 +31,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 5,horizontal: 5),
-            child: ElevatedButton.icon(
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(Colors.teal.shade400),
-                shape: MaterialStateProperty.all<OutlinedBorder>(
-                  RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20),),
-                  ),
-                ),
-              ),
-              icon: Icon(Icons.exit_to_app_rounded),
-              label: Text('Logout'),
-              onPressed: () async {
-                await _auth.signOut();
-                //Goto the the login page
-                Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(builder: (context) => Wrapper()),
-                      (Route<dynamic> route) => false,
-                );
-              },
-            ),
-          ),
-        ],
-      ),
+      appBar: header(context, 'Branch'),
       body: Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
