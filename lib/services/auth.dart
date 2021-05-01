@@ -52,9 +52,10 @@ class AuthService {
       }
       //user created as server end
       if(httpResult['status'] == possitiveStatus) {
-        sp.setString(AppPref.centerIdPref, httpResult['CENTER_ID']);
-        sp.setString(AppPref.centerNamePref, httpResult['NAME']);
+        sp.setString(AppPref.userIdPref, httpResult['USER_ID']);
+        sp.setString(AppPref.userNamePref, httpResult['NAME']);
         sp.setString(AppPref.emailPref, httpResult['EMAIL_ID']);
+        sp.setString(AppPref.typePref, httpResult['TYPE']);
         UserCredential result = await _auth.signInWithEmailAndPassword(
             email: email, password: password);
         return _userFromFirebaseCredential(result);
@@ -66,9 +67,10 @@ class AuthService {
     }
     on FirebaseAuthException catch(e)
     {
-      sp.setString(AppPref.centerIdPref, '');
+      sp.setString(AppPref.userIdPref, '');
       sp.setString(AppPref.emailPref, '');
-      sp.setString(AppPref.centerNamePref, '');
+      sp.setString(AppPref.userNamePref, '');
+      sp.setString(AppPref.typePref, '');
       print('Firebase Error Code = '+e.code);
       if(e.code == 'invalid-email'){
         return 'invalid EmailID.';
@@ -100,9 +102,10 @@ class AuthService {
       }
       //user created as server end
       if(httpResult['status'] == possitiveStatus) {
-        sp.setString(AppPref.centerIdPref, httpResult['CENTER_ID']);
-        sp.setString(AppPref.centerNamePref, httpResult['NAME']);
+        sp.setString(AppPref.userIdPref, httpResult['USER_ID']);
+        sp.setString(AppPref.userNamePref, httpResult['NAME']);
         sp.setString(AppPref.emailPref, httpResult['EMAIL_ID']);
+        sp.setString(AppPref.typePref, httpResult['TYPE']);
         UserCredential result = await _auth.createUserWithEmailAndPassword(
             email: email, password: password);
         return _userFromFirebaseCredential(result);
@@ -112,9 +115,10 @@ class AuthService {
     }
     on FirebaseAuthException catch(e)
     {
-      sp.setString(AppPref.centerIdPref, '');
+      sp.setString(AppPref.userIdPref, '');
       sp.setString(AppPref.emailPref, '');
-      sp.setString(AppPref.centerNamePref, '');
+      sp.setString(AppPref.userNamePref, '');
+      sp.setString(AppPref.typePref, '');
       RegistrationService registrationService = RegistrationService(emailId: email,centerName: centerName,
           address: address,contactNumber: contactNumber);
       dynamic httpResult = await registrationService.deleteRegUser(kDeleteRegRequest);
@@ -145,9 +149,10 @@ class AuthService {
   //SignOut
   Future signOut() async{
     try{
-      sp.setString(AppPref.centerIdPref, '');
+      sp.setString(AppPref.userIdPref, '');
       sp.setString(AppPref.emailPref, '');
-      sp.setString(AppPref.centerNamePref, '');
+      sp.setString(AppPref.userNamePref, '');
+      sp.setString(AppPref.typePref, '');
       return await _auth.signOut();
     } catch(e) {
       print(e.toString());

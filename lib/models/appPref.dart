@@ -1,6 +1,7 @@
 class AppPref {
   static final String emailPref = 'EMAIL_ID';
-  static final String centerIdPref = 'CENTER_ID';
-  static final String centerNamePref = 'NAME';
+  static final String userIdPref = 'USER_ID';
+  static final String userNamePref = 'NAME';
+  static final String typePref = 'TYPE';
 
 }

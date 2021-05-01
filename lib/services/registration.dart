@@ -20,6 +20,7 @@ class RegistrationService {
       map[CT001P.centerNameFld] = centerName;
       map[CT001P.contactNumberFld] = contactNumber;
       map[CT001P.addressFld] = address;
+      map[CT001P.typeFld] = 'AD'; //we are creating an Admin User....
       print(map);
       final response = await http.post(url, body: map);
       if (response.statusCode == 200) {

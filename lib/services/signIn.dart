@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:fabtech_aspirationclass_dev/utilites/constantValue.dart';
 import 'package:fabtech_aspirationclass_dev/models/CT001P.dart';
 class SignInService {
-  String emailId, centerName, address, contactNumber;
+  String emailId;
 
   SignInService(
       {this.emailId});

@@ -76,7 +76,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           children: [
                             Container(
                               child: Center(
-                                child: Text(sp.getString(AppPref.centerNamePref),
+                                child: Text(sp.getString(AppPref.userNamePref),
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontSize: 25,
