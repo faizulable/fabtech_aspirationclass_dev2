@@ -7,41 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 
-/*
-class Wrapper extends StatelessWidget {
-
-  bool showSignIn = true;
-
-  @override
-  Widget build(BuildContext context) {
-    final AppUser user = Provider.of<AppUser>(context);
-    final DataConnectionStatus connectivity = Provider.of<DataConnectionStatus>(context);
-    print(user);
-    if(connectivity == DataConnectionStatus.connected){
-      EasyLoading.dismiss();
-      if (user == null) {
-        if(showSignIn) {
-          return SignInPage();
-        }else{
-          return RegisterPage();
-        }
-      } else {
-        return MyHomePage(title: 'Home',);
-      }
-    } else if(connectivity == DataConnectionStatus.disconnected){
-      EasyLoading.dismiss();
-      return Container(
-        child: Center(
-          child: Text('No internet Connection'),
-        ),
-      );
-    }
-    else {
-      return LoadingScreen();
-    }
-  }
-}
-*/
 
 class Wrapper extends StatefulWidget {
   @override
@@ -61,7 +26,7 @@ class _WrapperState extends State<Wrapper> {
           return SignInPage();
       } else {
         return MyHomePage();
-        //return GridWidget();
+        //return ListWidget();
       }
     } else if(connectivity == DataConnectionStatus.disconnected){
       EasyLoading.dismiss();

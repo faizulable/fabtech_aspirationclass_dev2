@@ -96,3 +96,27 @@ const inputContactDecoration = InputDecoration(
     BorderSide(width: 3,color: Colors.redAccent,style: BorderStyle.solid),
   ),
 );
+
+const secondaryHeadingTextStyle = TextStyle(
+  color: Colors.white,
+  fontSize: 35,
+  fontFamily: 'Overtaking',
+);
+
+const primaryHeadingTextStyle = TextStyle(
+  color: Colors.black,
+  fontSize: 25,
+  fontFamily: 'LemonMilkBold',
+);
+
+const tertiaryHeadingTextStyle = TextStyle(
+  color: Colors.black,
+  fontSize: 20,
+  fontFamily: 'LandasansMedium',
+);
+
+const tertiaryValueTextStyle = TextStyle(
+  color: Colors.black54,
+  fontSize: 20,
+  fontFamily: 'LandasansMedium',
+);

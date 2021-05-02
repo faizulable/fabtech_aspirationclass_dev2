@@ -19,7 +19,6 @@ class MyHomePage extends StatefulWidget {
 }
 class _MyHomePageState extends State<MyHomePage> {
   List<ClassList> classList;
-  ClassList uniqueClass;
   bool _isloading = true;
 
   @override
@@ -145,11 +144,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   padding: const EdgeInsets.all(10.0),
                   child: Center(
                     child: Text('List of classes',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 35,
-                        fontFamily: 'Overtaking',
-                      ),
+                      style: secondaryHeadingTextStyle,
                     ),
                   ),
                 ),

@@ -3,6 +3,7 @@ import 'package:fabtech_aspirationclass_dev/utilites/widgets/header.dart';
 import 'package:fabtech_aspirationclass_dev/models/appPref.dart';
 import 'package:fabtech_aspirationclass_dev/main.dart';
 import 'package:fabtech_aspirationclass_dev/utilites/constantValue.dart';
+import 'package:fabtech_aspirationclass_dev/screens/class/student/listWidget.dart';
 
 class StudentPage extends StatefulWidget {
   final String classNum;
@@ -12,6 +13,24 @@ class StudentPage extends StatefulWidget {
 }
 
 class _StudentPageState extends State<StudentPage> {
+  List<StudentList> studentList;
+
+  @override
+  void initState() {
+    super.initState();
+    studentList =[];
+    studentList.add(StudentList('AAAAAA0521', 'Md Inzamamul Haque', 'M', '7894561230', 'dummyId@gmail.com',
+        '2', '600', '0'));
+    studentList.add(StudentList('BBBBBB0521', 'Md Faizul Haque', 'M', '7894561230', 'dummyId@gmail.com',
+        '2', '600', '0'));
+    studentList.add(StudentList('CCCCCC0521', 'Md Waizul Haque', 'M', '7894561230', 'dummyId@gmail.com',
+        '2', '600', '600'));
+    studentList.add(StudentList('DDDDDD0521', 'Aamir Saif', 'M', '7894561230', 'dummyId@gmail.com',
+        '2', '600', '0'));
+    studentList.add(StudentList('EEEEEE0521', 'Mohd Nadeem Ather', 'M', '7894561230', 'dummyId@gmail.com',
+        '2', '600', '1200'));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -98,8 +117,13 @@ class _StudentPageState extends State<StudentPage> {
               ),
             ),
             Expanded(
-              child: Container(
-                child: Text('List of students'),
+              child: ListView.builder(
+                  itemCount: studentList.length,
+                  itemBuilder: (BuildContext context, int index){
+                    return ListWidget(studentId: studentList[index].studentId,name: studentList[index].name,
+                    contact: studentList[index].contact,monthlyfees: studentList[index].monthlyfees,
+                      dues: studentList[index].dues);
+                  },
               ),
             ),
           ],
@@ -107,4 +131,11 @@ class _StudentPageState extends State<StudentPage> {
       ),
     );
   }
+}
+
+class StudentList
+{
+  final String studentId,name,gender,contact,emailId,subjectCount,monthlyfees,dues;
+  StudentList(this.studentId,this.name,this.gender,this.contact,
+      this.emailId,this.subjectCount,this.monthlyfees,this.dues);
 }
