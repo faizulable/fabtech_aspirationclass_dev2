@@ -1,9 +1,15 @@
+import 'package:fabtech_aspirationclass_dev/models/CL001P.dart';
 import 'package:flutter/material.dart';
 import 'package:fabtech_aspirationclass_dev/main.dart';
 import 'package:fabtech_aspirationclass_dev/models/appPref.dart';
 import 'package:fabtech_aspirationclass_dev/customPainter/LabelCustomPainter.dart';
 import 'package:fabtech_aspirationclass_dev/screens/home/gridWidget.dart';
 import 'package:fabtech_aspirationclass_dev/utilites/widgets/header.dart';
+import 'package:fabtech_aspirationclass_dev/utilites/widgets/progress.dart';
+import 'package:fabtech_aspirationclass_dev/screens/class/class.dart';
+import 'package:fabtech_aspirationclass_dev/services/selectclass.dart';
+import 'package:fabtech_aspirationclass_dev/utilites/constantValue.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key}) : super(key: key);
@@ -13,19 +19,46 @@ class MyHomePage extends StatefulWidget {
 }
 class _MyHomePageState extends State<MyHomePage> {
   List<ClassList> classList;
+  ClassList uniqueClass;
+  bool _isloading = true;
 
   @override
   void initState() {
     super.initState();
     classList =[];
-    classList.add(ClassList('5','50'));
-    classList.add(ClassList('6','35'));
-    classList.add(ClassList('7','40'));
-    classList.add(ClassList('8','53'));
-    classList.add(ClassList('9','45'));
-    classList.add(ClassList('10','60'));
-    classList.add(ClassList('11','87'));
-    classList.add(ClassList('12','69'));
+    getClassList();
+  }
+
+  getClassList() async {
+    try
+    {
+      SelectClass selectClassService = SelectClass(branchId: sp.getString(AppPref.userIdPref));
+      dynamic httpResult = await selectClassService.selectClassReq(kSelectClass);
+      String possitiveStatus = 'true';
+      //failed as server end
+      if(httpResult is String){
+        EasyLoading.showToast(httpResult);
+      }
+      //user created as server end
+      if(httpResult['status'] == possitiveStatus) {
+        //Data i-s fetch successfully
+        httpResult['data'].forEach((element){
+          /*setState(() {
+            classList.add(ClassList(element[CL001P.classNumFld], element[CL001P.numOfStuFld]));
+          });*/
+          classList.add(ClassList(element[CL001P.classNumFld], element[CL001P.numOfStuFld]));
+        });
+      }
+      else {
+        EasyLoading.showToast(httpResult['message']);
+      }
+    } catch (e) {
+      EasyLoading.showToast(e);
+    }
+    //finally hide the progress bar
+    setState(() {
+      _isloading = false;
+    });
   }
 
   @override
@@ -124,7 +157,8 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             Expanded(
-              child: GridView.builder(
+              child: _isloading ? circularProgress() :
+              GridView.builder(
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2
                   ),
@@ -134,7 +168,10 @@ class _MyHomePageState extends State<MyHomePage> {
                         child: GridWidget(classNum: classList[index].classNum,
                             numOfStudents: classList[index].numOfStudents),
                         onTap: (){
-                          print('class is pressed');
+                          //print('class is pressed');
+                          Navigator.push(context, MaterialPageRoute(builder: (context) {
+                            return ClassPage(classNum: classList[index].classNum);
+                          }));
                         },
                       );
                   },
