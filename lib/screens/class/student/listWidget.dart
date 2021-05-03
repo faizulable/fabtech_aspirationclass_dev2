@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:fabtech_aspirationclass_dev/utilites/constantValue.dart';
 
 class ListWidget extends StatelessWidget {
-  final String studentId,name,contact,monthlyfees,dues;
-  ListWidget({this.studentId,this.name,this.contact,this.monthlyfees,this.dues});
+  final String studentId,name,contact,monthlyfees,dues,subCount;
+  ListWidget({this.studentId,this.name,this.contact,this.monthlyfees,this.dues,this.subCount});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +20,7 @@ class ListWidget extends StatelessWidget {
         ),
         color: Colors.teal.shade100,
         child: SizedBox(
-          height: 130.0,
+          height: 110.0,
           child: Stack(
             children: [
               Align(
@@ -42,11 +41,7 @@ class ListWidget extends StatelessWidget {
                           child: Padding(
                             padding: const EdgeInsets.all(5.0),
                             child: Text(studentId,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 25,
-                              fontFamily: 'LemonMilkLight',
-                            ),
+                            style: studentIdTextStyle,
                             ),
                           ),
                         ),
@@ -54,35 +49,38 @@ class ListWidget extends StatelessWidget {
                         Container(
                           alignment: Alignment.centerLeft,
                           child: Text(name,
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 25,
-                              fontFamily: 'LemonMilkBold',
-                            ),
+                            style: studentNameTextStyle,
                           ),
                         ),
                         SizedBox(height: 5.0),
                         Row(
                           children: [
                             Text('Contact: ',
-                              style: tertiaryHeadingTextStyle,
+                              style: subHeadingTextStyle,
                             ),
                             Text(contact,
-                              style: tertiaryValueTextStyle,
+                              style: subValueTextStyle,
                             ),
                             SizedBox(width: 5.0),
                             Text('Amount: ',
-                              style: tertiaryHeadingTextStyle,
+                              style: subHeadingTextStyle,
                             ),
                             Text(monthlyfees,
-                              style: tertiaryValueTextStyle,
+                              style: subValueTextStyle,
                             ),
                             SizedBox(width: 5.0),
                             Text('Dues: ',
-                              style: tertiaryHeadingTextStyle,
+                              style: subHeadingTextStyle,
                             ),
                             Text(dues,
-                              style: tertiaryValueTextStyle,
+                              style: subValueTextStyle,
+                            ),
+                            SizedBox(width: 5.0),
+                            Text('SubCount: ',
+                              style: subHeadingTextStyle,
+                            ),
+                            Text(subCount,
+                              style: subValueTextStyle,
                             ),
                           ],
                         ),
@@ -98,3 +96,27 @@ class ListWidget extends StatelessWidget {
     );
   }
 }
+
+//Text Styling
+const studentIdTextStyle = TextStyle(
+  color: Colors.black,
+  fontSize: 20,
+  fontFamily: 'LemonMilkLight',
+);
+const studentNameTextStyle = TextStyle(
+  color: Colors.black,
+  fontSize: 20,
+  fontFamily: 'LemonMilkBold',
+);
+
+const subValueTextStyle = TextStyle(
+  color: Colors.black54,
+  fontSize: 15,
+  fontFamily: 'LandasansMedium',
+);
+
+const subHeadingTextStyle = TextStyle(
+  color: Colors.black,
+  fontSize: 15,
+  fontFamily: 'LandasansMedium',
+);

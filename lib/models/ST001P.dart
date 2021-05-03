@@ -1,10 +1,12 @@
-class CT001P {
+class ST001P {
   static final String studentIdFld = 'STUDENT_ID';
   static final String classNumFld = 'CLASS_NBR';
   static final String emailFld = 'EMAIL_ID';
   static final String nameFld = 'NAME';
   static final String genderFld = 'GENDER';
   static final String contactNumberFld = 'CONTACT_NUM';
+  static final String schoolFld = 'SCHOOL';
+  static final String boardFld = 'BOARD';
   static final String subjectCountFld = 'SUBJECT_COUNT';
   static final String monthlyFeesFld = 'MONTHLY_FEES';
   static final String duesFld = 'TOTAL_DUES';

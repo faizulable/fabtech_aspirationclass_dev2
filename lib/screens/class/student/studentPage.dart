@@ -4,6 +4,10 @@ import 'package:fabtech_aspirationclass_dev/models/appPref.dart';
 import 'package:fabtech_aspirationclass_dev/main.dart';
 import 'package:fabtech_aspirationclass_dev/utilites/constantValue.dart';
 import 'package:fabtech_aspirationclass_dev/screens/class/student/listWidget.dart';
+import 'package:fabtech_aspirationclass_dev/services/classStudentList.dart';
+import 'package:fabtech_aspirationclass_dev/models/ST001P.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:fabtech_aspirationclass_dev/utilites/widgets/progress.dart';
 
 class StudentPage extends StatefulWidget {
   final String classNum;
@@ -14,21 +18,44 @@ class StudentPage extends StatefulWidget {
 
 class _StudentPageState extends State<StudentPage> {
   List<StudentList> studentList;
+  bool _isloading = true;
 
   @override
   void initState() {
     super.initState();
     studentList =[];
-    studentList.add(StudentList('AAAAAA0521', 'Md Inzamamul Haque', 'M', '7894561230', 'dummyId@gmail.com',
-        '2', '600', '0'));
-    studentList.add(StudentList('BBBBBB0521', 'Md Faizul Haque', 'M', '7894561230', 'dummyId@gmail.com',
-        '2', '600', '0'));
-    studentList.add(StudentList('CCCCCC0521', 'Md Waizul Haque', 'M', '7894561230', 'dummyId@gmail.com',
-        '2', '600', '600'));
-    studentList.add(StudentList('DDDDDD0521', 'Aamir Saif', 'M', '7894561230', 'dummyId@gmail.com',
-        '2', '600', '0'));
-    studentList.add(StudentList('EEEEEE0521', 'Mohd Nadeem Ather', 'M', '7894561230', 'dummyId@gmail.com',
-        '2', '600', '1200'));
+    getStudentList();
+  }
+
+  getStudentList() async {
+    try
+    {
+      ClassStudentListService classStudentListService = ClassStudentListService(branchId: sp.getString(AppPref.userIdPref),classNum: widget.classNum);
+      dynamic httpResult = await classStudentListService.selectStudentReq(kClassSelectStudent);
+      String possitiveStatus = 'true';
+      //failed as server end
+      if(httpResult is String){
+        EasyLoading.showToast(httpResult);
+      }
+      //data fetch from server end
+      if(httpResult['status'] == possitiveStatus) {
+        //Data i-s fetch successfully
+        httpResult['data'].forEach((element){
+          studentList.add(StudentList(element[ST001P.studentIdFld],element[ST001P.nameFld],element[ST001P.genderFld],
+          element[ST001P.contactNumberFld],element[ST001P.emailFld],element[ST001P.subjectCountFld],
+              element[ST001P.monthlyFeesFld],element[ST001P.duesFld]));
+        });
+      }
+      else {
+        EasyLoading.showToast(httpResult['message']);
+      }
+    } catch (e) {
+      EasyLoading.showToast(e);
+    }
+    //finally hide the progress bar
+    setState(() {
+      _isloading = false;
+    });
   }
 
   @override
@@ -117,12 +144,12 @@ class _StudentPageState extends State<StudentPage> {
               ),
             ),
             Expanded(
-              child: ListView.builder(
+              child: _isloading ? circularProgress() : ListView.builder(
                   itemCount: studentList.length,
                   itemBuilder: (BuildContext context, int index){
                     return ListWidget(studentId: studentList[index].studentId,name: studentList[index].name,
                     contact: studentList[index].contact,monthlyfees: studentList[index].monthlyfees,
-                      dues: studentList[index].dues);
+                      dues: studentList[index].dues,subCount: studentList[index].subjectCount);
                   },
               ),
             ),

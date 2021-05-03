@@ -5,6 +5,7 @@ const kRegisterUser = 'registration.php';
 const kDeleteRegRequest = 'deleteRegReqst.php';
 const kSignIn = 'signIn.php';
 const kSelectClass = 'selectClass.php';
+const kClassSelectStudent = 'selectClassStudents.php';
 
 
 const inputEmailDecoration = InputDecoration(
@@ -109,14 +110,4 @@ const primaryHeadingTextStyle = TextStyle(
   fontFamily: 'LemonMilkBold',
 );
 
-const tertiaryHeadingTextStyle = TextStyle(
-  color: Colors.black,
-  fontSize: 20,
-  fontFamily: 'LandasansMedium',
-);
 
-const tertiaryValueTextStyle = TextStyle(
-  color: Colors.black54,
-  fontSize: 20,
-  fontFamily: 'LandasansMedium',
-);
