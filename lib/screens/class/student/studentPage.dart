@@ -18,16 +18,20 @@ class StudentPage extends StatefulWidget {
 
 class _StudentPageState extends State<StudentPage> {
   List<StudentList> studentList;
+  List<StudentList> studentViewList;
   bool _isloading = true;
 
   @override
   void initState() {
     super.initState();
     studentList =[];
+    studentViewList =[];
     getStudentList();
   }
 
   getStudentList() async {
+    studentList.clear();
+    studentViewList.clear();
     try
     {
       ClassStudentListService classStudentListService = ClassStudentListService(branchId: sp.getString(AppPref.userIdPref),classNum: widget.classNum);
@@ -45,6 +49,7 @@ class _StudentPageState extends State<StudentPage> {
           element[ST001P.contactNumberFld],element[ST001P.emailFld],element[ST001P.subjectCountFld],
               element[ST001P.monthlyFeesFld],element[ST001P.duesFld]));
         });
+        studentViewList.addAll(studentList);
       }
       else {
         EasyLoading.showToast(httpResult['message']);
@@ -140,16 +145,19 @@ class _StudentPageState extends State<StudentPage> {
               child: Center(
                 child: TextFormField(
                   decoration: inputStudentNameDecoration,
+                  onChanged: (value){
+                    filerSearchResult(value);
+                  },
                 ),
               ),
             ),
             Expanded(
               child: _isloading ? circularProgress() : ListView.builder(
-                  itemCount: studentList.length,
+                  itemCount: studentViewList.length,
                   itemBuilder: (BuildContext context, int index){
-                    return ListWidget(studentId: studentList[index].studentId,name: studentList[index].name,
-                    contact: studentList[index].contact,monthlyfees: studentList[index].monthlyfees,
-                      dues: studentList[index].dues,subCount: studentList[index].subjectCount);
+                    return ListWidget(studentId: studentViewList[index].studentId,name: studentViewList[index].name,
+                    contact: studentViewList[index].contact,monthlyfees: studentViewList[index].monthlyfees,
+                      dues: studentViewList[index].dues,subCount: studentViewList[index].subjectCount);
                   },
               ),
             ),
@@ -157,6 +165,34 @@ class _StudentPageState extends State<StudentPage> {
         ),
       ),
     );
+  }
+
+//method to filter using studentName
+  void filerSearchResult(String query){
+    if(studentList.isNotEmpty){
+      if(query.isNotEmpty){
+        List<StudentList> dummyList = [];
+        studentList.forEach((element) {
+          if(element.name.toUpperCase().contains(query.toUpperCase())){
+            dummyList.add(element);
+          }
+        });
+        setState(() {
+          if(dummyList.isNotEmpty){
+            studentViewList.clear();
+            studentViewList.addAll(dummyList);
+          } else{
+            studentViewList.clear();
+            studentViewList.addAll(studentList);
+          }
+        });
+      } else {
+        setState(() {
+          studentViewList.clear();
+          studentViewList.addAll(studentList);
+        });
+      }
+    }
   }
 }
 
