@@ -36,7 +36,7 @@ class _ClassPageState extends State<ClassPage> {
   onTap(int pageIndex){
     _pageController.animateToPage(
       pageIndex,
-      duration: Duration(milliseconds: 500),
+      duration: Duration(milliseconds: 300),
       curve: Curves.easeInOut
     );
   }
@@ -47,7 +47,7 @@ class _ClassPageState extends State<ClassPage> {
       body: PageView(
         children: [
           StudentPage(classNum: widget.classNum),
-          FacultyPage(),
+          FacultyPage(classNum: widget.classNum),
         ],
         controller: _pageController,
         physics: NeverScrollableScrollPhysics(),

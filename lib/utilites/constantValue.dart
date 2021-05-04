@@ -6,6 +6,7 @@ const kDeleteRegRequest = 'deleteRegReqst.php';
 const kSignIn = 'signIn.php';
 const kSelectClass = 'selectClass.php';
 const kClassSelectStudent = 'selectClassStudents.php';
+const kClassSelectFaculty = 'selectClassFaculty.php';
 
 
 const inputEmailDecoration = InputDecoration(
@@ -67,6 +68,22 @@ const inputStudentNameDecoration = InputDecoration(
     BorderSide(width: 3,color: Colors.redAccent,style: BorderStyle.solid),
   ),
 );
+
+const inputFacultyNameDecoration = InputDecoration(
+  filled: true,
+  fillColor: Colors.white,
+  hintText: 'Enter Faculty Name',
+  hintStyle: TextStyle(fontSize: 12,),
+  prefixIcon: Icon(Icons.assignment_ind),
+  border: OutlineInputBorder(
+    borderRadius:
+    BorderRadius.all(Radius.circular(25),
+    ),
+    borderSide:
+    BorderSide(width: 3,color: Colors.redAccent,style: BorderStyle.solid),
+  ),
+);
+
 
 const inputAddressDecoration = InputDecoration(
   filled: true,

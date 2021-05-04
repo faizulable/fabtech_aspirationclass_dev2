@@ -11,9 +11,9 @@ class ST001P {
   static final String monthlyFeesFld = 'MONTHLY_FEES';
   static final String duesFld = 'TOTAL_DUES';
   static final String updUserFld = 'UPD_USER';
-  static final String updDateFld = 'CREATE_DATE';
-  static final String updTimeFld = 'UPD_DATE';
-  static final String createUserFld = 'UPD_TIME';
+  static final String updDateFld = 'UPD_DATE';
+  static final String updTimeFld = 'UPD_TIME';
+  static final String createUserFld = 'CREATE_USER';
   static final String createDateFld = 'CREATE_DATE';
   static final String createTimeFld = 'CREATE_TIME';
 }
