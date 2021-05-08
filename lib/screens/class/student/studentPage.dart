@@ -8,6 +8,7 @@ import 'package:fabtech_aspirationclass_dev/services/classStudentList.dart';
 import 'package:fabtech_aspirationclass_dev/models/ST001P.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fabtech_aspirationclass_dev/utilites/widgets/progress.dart';
+import 'package:fabtech_aspirationclass_dev/screens/studentDetail/mainDetail.dart';
 
 class StudentPage extends StatefulWidget {
   final String classNum;
@@ -155,9 +156,17 @@ class _StudentPageState extends State<StudentPage> {
               child: _isloading ? circularProgress() : ListView.builder(
                   itemCount: studentViewList.length,
                   itemBuilder: (BuildContext context, int index){
-                    return ListWidget(studentId: studentViewList[index].studentId,name: studentViewList[index].name,
-                    contact: studentViewList[index].contact,monthlyfees: studentViewList[index].monthlyfees,
-                      dues: studentViewList[index].dues,subCount: studentViewList[index].subjectCount);
+                    return GestureDetector(
+                      child: ListWidget(studentId: studentViewList[index].studentId,name: studentViewList[index].name,
+                      contact: studentViewList[index].contact,monthlyfees: studentViewList[index].monthlyfees,
+                        dues: studentViewList[index].dues,subCount: studentViewList[index].subjectCount),
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context) {
+                          return MainDetail(studentClass:widget.classNum,studentId: studentViewList[index].studentId,
+                          studentName: studentViewList[index].name);
+                        }));
+                      },
+                    );
                   },
               ),
             ),

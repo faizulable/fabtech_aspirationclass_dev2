@@ -14,10 +14,10 @@ class SignInService {
     try {
       var map = new Map<String, dynamic>();
       map[CT001P.emailFld] = emailId;
-      //print(map);
+      print(map);
       final response = await http.post(url, body: map);
+      print(response.body);
       if (response.statusCode == 200) {
-        print(response.body);
         return jsonDecode(response.body);
       } else {
         return "No Data";
