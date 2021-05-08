@@ -8,6 +8,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fabtech_aspirationclass_dev/models/FC001P.dart';
 import 'package:fabtech_aspirationclass_dev/utilites/widgets/progress.dart';
 import 'package:fabtech_aspirationclass_dev/screens/class/faculty/listWidgetFac.dart';
+import 'package:fabtech_aspirationclass_dev/screens/class/faculty/facultyStudentPage.dart';
 
 
 class FacultyPage extends StatefulWidget {
@@ -27,10 +28,10 @@ class _FacultyPageState extends State<FacultyPage> {
     super.initState();
     facultyList =[];
     facultyViewList =[];
-    getStudentList();
+    getFacultyList();
   }
 
-  getStudentList() async {
+  getFacultyList() async {
     facultyList.clear();
     facultyViewList.clear();
     try
@@ -155,9 +156,19 @@ class _FacultyPageState extends State<FacultyPage> {
               child: _isloading ? circularProgress() : ListView.builder(
                 itemCount: facultyViewList.length,
                 itemBuilder: (BuildContext context, int index){
-                  return ListWidgetFac(facultyId: facultyViewList[index].facultyId,name: facultyViewList[index].name,
-                      subject: facultyViewList[index].subject, contact: facultyViewList[index].contact,
-                      perFacultyShare: facultyViewList[index].perFacultyShare,perBranchShare: facultyViewList[index].perBranchShare);
+                  return GestureDetector(
+                    child: ListWidgetFac(facultyId: facultyViewList[index].facultyId,name: facultyViewList[index].name,
+                        subject: facultyViewList[index].subject, contact: facultyViewList[index].contact,
+                        perFacultyShare: facultyViewList[index].perFacultyShare,perBranchShare: facultyViewList[index].perBranchShare),
+                    onTap: (){
+                      //Navigate to new page
+                      Navigator.push(context, MaterialPageRoute(builder: (context) {
+                        return FacultyStudentPage(classNum: widget.classNum,
+                          subject: facultyViewList[index].subject,facultyName: facultyViewList[index].name,
+                        facultyId: facultyViewList[index].facultyId);
+                      }));
+                    },
+                  );
                 },
               ),
             ),

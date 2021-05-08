@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 
-const kRootlink = "https://blowziest-dam.000webhostapp.com/AspirationClass/";
+const kRootlink = "http://192.168.0.111/AspirationClasses/";
 const kRegisterUser = 'registration.php';
 const kDeleteRegRequest = 'deleteRegReqst.php';
 const kSignIn = 'signIn.php';
 const kSelectClass = 'selectClass.php';
 const kClassSelectStudent = 'selectClassStudents.php';
 const kClassSelectFaculty = 'selectClassFaculty.php';
+const kClassSelectFacultyStd = 'selectFacultyStudents.php';
+
 
 
 const inputEmailDecoration = InputDecoration(
