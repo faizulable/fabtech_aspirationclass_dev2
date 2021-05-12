@@ -25,11 +25,11 @@ class _MainDetailState extends State<MainDetail> {
           activeColor: Colors.purple,
           items: [
             BottomNavigationBarItem(
-              icon: Icon(Icons.supervised_user_circle_sharp),
+              icon: Icon(Icons.assignment_ind),
               label: 'Personal',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.assignment_ind),
+              icon: Icon(Icons.book),
               label: 'Subject',
             ),
           ],
