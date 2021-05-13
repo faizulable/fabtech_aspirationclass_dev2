@@ -71,12 +71,15 @@ flutter:
     - family: LandasansMedium
       fonts:
         - asset: fonts/LandasansMedium.otf
-    - family: ApeMount
+    - family: yellowRabbit
       fonts:
-        - asset: fonts/ApeMount.otf
-    - family: Overtaking
+          - asset: fonts/Yellowrabbit.otf
+    - family: PlayfairDisplayMedium
       fonts:
-        - asset: fonts/Overtaking.otf
+        - asset: fonts/PlayfairDisplaySemibold.ttf
+    - family: Swansea
+      fonts:
+          - asset: fonts/Swansea.ttf
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

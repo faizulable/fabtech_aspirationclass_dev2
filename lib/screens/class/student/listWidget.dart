@@ -20,7 +20,7 @@ class ListWidget extends StatelessWidget {
         ),
         color: Colors.teal.shade100,
         child: SizedBox(
-          height: 110.0,
+          height: 100.0,
           child: Stack(
             children: [
               Align(
@@ -101,7 +101,7 @@ class ListWidget extends StatelessWidget {
 const studentIdTextStyle = TextStyle(
   color: Colors.black,
   fontSize: 20,
-  fontFamily: 'LemonMilkLight',
+  fontFamily: 'Swansea',
 );
 const studentNameTextStyle = TextStyle(
   color: Colors.black,

@@ -5,6 +5,7 @@ class FC001P {
   static final String facultyFld = 'FACULTY_ID';
   static final String nameFld = 'NAME';
   static final String contactNumberFld = 'CONTACT';
+  static final String emailIDFld = 'EMAIL_ID';
   static final String perShareFacultyFld = 'PERC_SHARE_FAC';
   static final String perShareBranchFld = 'PERC_SHARE_BAR';
   static final String createUserFld = 'CREATE_USER';

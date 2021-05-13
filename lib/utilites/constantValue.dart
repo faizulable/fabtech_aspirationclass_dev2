@@ -8,6 +8,7 @@ const kSelectClass = 'selectClass.php';
 const kClassSelectStudent = 'selectClassStudents.php';
 const kClassSelectFaculty = 'selectClassFaculty.php';
 const kClassSelectFacultyStd = 'selectFacultyStudents.php';
+const kSelectStudentPersonalDetails = 'selectStudentPersonalDetails.php';
 
 
 
@@ -120,7 +121,7 @@ const inputContactDecoration = InputDecoration(
 const secondaryHeadingTextStyle = TextStyle(
   color: Colors.white,
   fontSize: 35,
-  fontFamily: 'Overtaking',
+  fontFamily: 'yellowRabbit',
 );
 
 const primaryHeadingTextStyle = TextStyle(

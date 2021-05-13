@@ -37,7 +37,8 @@ class _MainDetailState extends State<MainDetail> {
         tabBuilder: (context,index){
           if(index == 0) {
             return  CupertinoTabView(
-              builder: (BuildContext context) => PersonalTab(),
+              builder: (BuildContext context) => PersonalTab(classNumStr: widget.studentClass,
+                studentIdStr: widget.studentId,studnetNameStr: widget.studentName,),
             );
           } else {
             return CupertinoTabView(
