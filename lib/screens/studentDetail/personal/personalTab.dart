@@ -219,93 +219,101 @@ class _PersonalTabState extends State<PersonalTab> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Container(
-                          height: MediaQuery.of(context).size.height/8,
-                          //padding: EdgeInsets.all(2.0),
-                          child: BaseContainerLeft(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                CustomPaint(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(2.0),
-                                    child: Center(
-                                      child: Text("Adm (MM/YY)",
-                                        style: headingTextStyle,
+                        Expanded(
+                          child: Container(
+                            height: MediaQuery.of(context).size.height/8,
+                            //padding: EdgeInsets.all(2.0),
+                            child: BaseContainerLeft(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  CustomPaint(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(2.0),
+                                      child: Center(
+                                        child: Text("Adm (MM/YY)",
+                                          style: headingTextStyle,
+                                        ),
                                       ),
                                     ),
+                                    painter: RPSCustomPainter(
+                                    ),
                                   ),
-                                  painter: RPSCustomPainter(
+                                  Center(
+                                    child: Text(admissionDateStr,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: amountHeadingTextStyle,
+                                    ),
                                   ),
-                                ),
-                                Center(
-                                  child: Text(admissionDateStr,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: amountHeadingTextStyle,
-                                  ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
                         ),
-                        Container(
-                          height: MediaQuery.of(context).size.height/8,
-                          //padding: EdgeInsets.all(2.0),
-                          child: BaseContainerLeft(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                CustomPaint(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(2.0),
-                                    child: Center(
-                                      child: Text('Adm Fees',
-                                        style: headingTextStyle,
+                        SizedBox(width: 2.0),
+                        Expanded(
+                          child: Container(
+                            height: MediaQuery.of(context).size.height/8,
+                            //padding: EdgeInsets.all(2.0),
+                            child: BaseContainerLeft(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  CustomPaint(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(2.0),
+                                      child: Center(
+                                        child: Text('Adm Fees',
+                                          style: headingTextStyle,
+                                        ),
                                       ),
                                     ),
+                                    painter: RPSCustomPainter(
+                                    ),
                                   ),
-                                  painter: RPSCustomPainter(
+                                  Center(
+                                    child: Text(admissionFeesStr,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: amountHeadingTextStyle,
+                                    ),
                                   ),
-                                ),
-                                Center(
-                                  child: Text(admissionFeesStr,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: amountHeadingTextStyle,
-                                  ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
                         ),
-                        Container(
-                          height: MediaQuery.of(context).size.height/8,
-                          //padding: EdgeInsets.all(2.0),
-                          child: BaseContainerLeft(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                CustomPaint(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(2.0),
-                                    child: Center(
-                                      child: Text('Monthly Fees',
-                                        style: headingTextStyle,
+                        SizedBox(width: 2.0),
+                        Expanded(
+                          child: Container(
+                            height: MediaQuery.of(context).size.height/8,
+                            //padding: EdgeInsets.all(2.0),
+                            child: BaseContainerLeft(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  CustomPaint(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(2.0),
+                                      child: Center(
+                                        child: Text('Monthly Fees',
+                                          style: headingTextStyle,
+                                        ),
                                       ),
                                     ),
+                                    painter: RPSCustomPainter(
+                                    ),
                                   ),
-                                  painter: RPSCustomPainter(
+                                  Center(
+                                    child: Text(monthlyFeesStr,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: amountHeadingTextStyle,
+                                    ),
                                   ),
-                                ),
-                                Center(
-                                  child: Text(monthlyFeesStr,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: amountHeadingTextStyle,
-                                  ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
                         ),
