@@ -9,6 +9,7 @@ const kClassSelectStudent = 'selectClassStudents.php';
 const kClassSelectFaculty = 'selectClassFaculty.php';
 const kClassSelectFacultyStd = 'selectFacultyStudents.php';
 const kSelectStudentPersonalDetails = 'selectStudentPersonalDetails.php';
+const kSelectStudentSubjectDetails = 'selectStudentSubjects.php';
 
 
 

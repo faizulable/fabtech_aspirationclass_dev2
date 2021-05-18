@@ -38,11 +38,12 @@ class _MainDetailState extends State<MainDetail> {
           if(index == 0) {
             return  CupertinoTabView(
               builder: (BuildContext context) => PersonalTab(classNumStr: widget.studentClass,
-                studentIdStr: widget.studentId,studnetNameStr: widget.studentName,),
+                studentIdStr: widget.studentId,studnetNameStr: widget.studentName),
             );
           } else {
             return CupertinoTabView(
-              builder: (BuildContext context) => SubjectTab(),
+              builder: (BuildContext context) => SubjectTab(classNumStr: widget.studentClass,
+                  studentIdStr: widget.studentId,studnetNameStr: widget.studentName),
             );
           }
         },
