@@ -3,7 +3,6 @@ import 'package:fabtech_aspirationclass_dev/utilites/constantValue.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fabtech_aspirationclass_dev/models/appUser.dart';
 import 'package:fabtech_aspirationclass_dev/models/appPref.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:fabtech_aspirationclass_dev/services/registration.dart';
 import 'package:fabtech_aspirationclass_dev/services/signIn.dart';
 
@@ -56,6 +55,7 @@ class AuthService {
         sp.setString(AppPref.userNamePref, httpResult['NAME']);
         sp.setString(AppPref.emailPref, httpResult['EMAIL_ID']);
         sp.setString(AppPref.typePref, httpResult['TYPE']);
+        sp.setString(AppPref.sessionPref, httpResult['SESSION']);
         UserCredential result = await _auth.signInWithEmailAndPassword(
             email: email, password: password);
         return _userFromFirebaseCredential(result);
@@ -71,6 +71,7 @@ class AuthService {
       sp.setString(AppPref.emailPref, '');
       sp.setString(AppPref.userNamePref, '');
       sp.setString(AppPref.typePref, '');
+      sp.setString(AppPref.sessionPref, '');
       print('Firebase Error Code = '+e.code);
       if(e.code == 'invalid-email'){
         return 'invalid EmailID.';
@@ -106,6 +107,7 @@ class AuthService {
         sp.setString(AppPref.userNamePref, httpResult['NAME']);
         sp.setString(AppPref.emailPref, httpResult['EMAIL_ID']);
         sp.setString(AppPref.typePref, httpResult['TYPE']);
+        sp.setString(AppPref.sessionPref, httpResult['SESSION']);
         UserCredential result = await _auth.createUserWithEmailAndPassword(
             email: email, password: password);
         return _userFromFirebaseCredential(result);
@@ -119,6 +121,7 @@ class AuthService {
       sp.setString(AppPref.emailPref, '');
       sp.setString(AppPref.userNamePref, '');
       sp.setString(AppPref.typePref, '');
+      sp.setString(AppPref.sessionPref, '');
       RegistrationService registrationService = RegistrationService(emailId: email,centerName: centerName,
           address: address,contactNumber: contactNumber);
       dynamic httpResult = await registrationService.deleteRegUser(kDeleteRegRequest);
@@ -153,6 +156,7 @@ class AuthService {
       sp.setString(AppPref.emailPref, '');
       sp.setString(AppPref.userNamePref, '');
       sp.setString(AppPref.typePref, '');
+      sp.setString(AppPref.sessionPref, '');
       return await _auth.signOut();
     } catch(e) {
       print(e.toString());

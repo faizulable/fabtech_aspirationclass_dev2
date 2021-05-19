@@ -63,7 +63,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: header(context, 'Branch'),
+      appBar: header(context, sp.getString(AppPref.sessionPref) ?? 'SESSION'),
       body: Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,

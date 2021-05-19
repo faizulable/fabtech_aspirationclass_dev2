@@ -1,6 +1,7 @@
 class CL001P {
   static final String branchIdFld = 'BRANCH_ID';
   static final String classNumFld = 'CLASS_NBR';
+  static final String sessionFld = 'AC_SESSION';
   static final String numOfStuFld = 'NO_OF_STUD';
   static final String monthlyFeesFld = 'MONTHLY_FEES';
   static final String totalDuesFld = 'TOTAL_DUES';

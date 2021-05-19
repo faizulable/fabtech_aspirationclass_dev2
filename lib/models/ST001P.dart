@@ -1,5 +1,6 @@
 class ST001P {
   static final String studentIdFld = 'STUDENT_ID';
+  static final String sessionFld = 'AC_SESSION';
   static final String classNumFld = 'CLASS_NBR';
   static final String emailFld = 'EMAIL_ID';
   static final String nameFld = 'NAME';

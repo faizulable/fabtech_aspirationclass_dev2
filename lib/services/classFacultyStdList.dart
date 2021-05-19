@@ -1,7 +1,10 @@
 import 'dart:convert';
+import 'package:fabtech_aspirationclass_dev/models/appPref.dart';
 import 'package:http/http.dart' as http;
 import 'package:fabtech_aspirationclass_dev/utilites/constantValue.dart';
 import 'package:fabtech_aspirationclass_dev/models/FC001P.dart';
+import 'package:fabtech_aspirationclass_dev/models/ST002P.dart';
+import 'package:fabtech_aspirationclass_dev/main.dart';
 
 class ClassFacultyStdListService {
   String branchId,classNum,subject,facultyId;
@@ -16,6 +19,7 @@ class ClassFacultyStdListService {
       map[FC001P.classNumFld] = classNum;
       map[FC001P.subjectFld] = subject;
       map[FC001P.facultyFld] = facultyId;
+      map[ST002P.sessionFld] = sp.getString(AppPref.sessionPref);
       //print(map);
       final response = await http.post(url, body: map);
       if (response.statusCode == 200) {
