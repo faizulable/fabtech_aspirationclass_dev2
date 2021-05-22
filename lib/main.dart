@@ -35,7 +35,6 @@ void configLoading() {
     ..userInteractions = true
     ..toastPosition = EasyLoadingToastPosition.bottom
     ..dismissOnTap = false;
-
 }
 
 class MyApp extends StatelessWidget {

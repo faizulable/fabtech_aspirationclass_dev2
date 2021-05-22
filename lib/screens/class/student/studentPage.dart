@@ -9,6 +9,7 @@ import 'package:fabtech_aspirationclass_dev/models/ST001P.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fabtech_aspirationclass_dev/utilites/widgets/progress.dart';
 import 'package:fabtech_aspirationclass_dev/screens/studentDetail/mainDetail.dart';
+import 'package:fabtech_aspirationclass_dev/screens/addStudent/addPageOne.dart';
 
 class StudentPage extends StatefulWidget {
   final String classNum;
@@ -153,21 +154,43 @@ class _StudentPageState extends State<StudentPage> {
               ),
             ),
             Expanded(
-              child: _isloading ? circularProgress() : ListView.builder(
-                  itemCount: studentViewList.length,
-                  itemBuilder: (BuildContext context, int index){
-                    return GestureDetector(
-                      child: ListWidget(studentId: studentViewList[index].studentId,name: studentViewList[index].name,
-                      contact: studentViewList[index].contact,monthlyfees: studentViewList[index].monthlyfees,
-                        dues: studentViewList[index].dues,subCount: studentViewList[index].subjectCount),
-                      onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context) {
-                          return MainDetail(studentClass:widget.classNum,studentId: studentViewList[index].studentId,
-                          studentName: studentViewList[index].name);
-                        }));
+              child: Stack(
+                children: [
+                  _isloading ? circularProgress() :
+                  Align(
+                    alignment: Alignment.topCenter,
+                    child: ListView.builder(
+                      itemCount: studentViewList.length,
+                      itemBuilder: (BuildContext context, int index){
+                        return GestureDetector(
+                          child: ListWidget(studentId: studentViewList[index].studentId,name: studentViewList[index].name,
+                              contact: studentViewList[index].contact,monthlyfees: studentViewList[index].monthlyfees,
+                              dues: studentViewList[index].dues,subCount: studentViewList[index].subjectCount),
+                          onTap: (){
+                            Navigator.push(context, MaterialPageRoute(builder: (context) {
+                              return MainDetail(studentClass:widget.classNum,studentId: studentViewList[index].studentId,
+                                  studentName: studentViewList[index].name);
+                            }));
+                          },
+                        );
                       },
-                    );
-                  },
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.bottomRight,
+                    child: Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child: FloatingActionButton(
+                        child: Icon(Icons.add),
+                        onPressed: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context){
+                            return AddPageOne(classNumStr: widget.classNum);
+                          }));
+                        },
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ],
