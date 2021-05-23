@@ -19,7 +19,9 @@ Future<DateTime> getDate(BuildContext context) {
     lastDate: DateTime(2050),
     builder: (BuildContext context, Widget child) {
       return Theme(
-        data: ThemeData.light(),
+        data: ThemeData.light().copyWith(
+          colorScheme: ColorScheme.light(primary: Colors.purple),
+        ),
         child: child,
       );
     },
