@@ -13,7 +13,9 @@ import 'package:fabtech_aspirationclass_dev/utilites/stringListValues.dart';
 import 'package:fabtech_aspirationclass_dev/utilites/getDate.dart';
 import 'package:fabtech_aspirationclass_dev/services/addStudentOpt.dart';
 import 'package:fabtech_aspirationclass_dev/models/ST001P.dart';
+import 'package:fabtech_aspirationclass_dev/models/addStudent.dart';
 import 'package:fabtech_aspirationclass_dev/utilites/widgets/progress.dart';
+import 'package:fabtech_aspirationclass_dev/screens/addStudent/addPageTwo.dart';
 import 'package:intl/intl.dart';
 
 
@@ -26,8 +28,11 @@ class AddPageOne extends StatefulWidget {
 }
 
 class _AddPageOneState extends State<AddPageOne> {
+
+  final _formKey = GlobalKey<FormState>();
   String _genderValue = genderList[0];
   String _dateValue = 'DD/MM/YY';
+  String _nameStr,_schoolStr,_boardStr,_admFeeStr,_contactNbrStr,_emailIdStr;
   DateTime _now = DateTime.now();
   List<SchoolList> _schoolList;
   List<String> _viewList;
@@ -73,332 +78,386 @@ class _AddPageOneState extends State<AddPageOne> {
             Align(
               alignment: Alignment.topCenter,
               child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    topContainer('CLASS '+widget.classNumStr,sp.getString(AppPref.userNamePref)),
-                    Container(
-                      padding: EdgeInsets.all(2.0),
-                      child: BaseContainerRight(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            CustomPaint(
-                              child: Padding(
-                                padding: const EdgeInsets.all(5.0),
-                                child: Center(
-                                  child: Text('Student Name',
-                                    style: headingTextStyle,
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      topContainer('CLASS '+widget.classNumStr,sp.getString(AppPref.userNamePref)),
+                      Container(
+                        padding: EdgeInsets.all(2.0),
+                        child: BaseContainerRight(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              CustomPaint(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(5.0),
+                                  child: Center(
+                                    child: Text('Student Name',
+                                      style: headingTextStyle,
+                                    ),
                                   ),
                                 ),
+                                painter: RPSCustomPainter(
+                                ),
                               ),
-                              painter: RPSCustomPainter(
+                              SizedBox(height: 5.0),
+                              Center(
+                                child: TextFormField(
+                                  decoration: inputNameDecoration,
+                                  validator: (value) {
+                                    if (value.isEmpty) {
+                                      return 'Cannot be blank';
+                                    }
+                                    if (value.length > 50) {
+                                      return 'Cannot be move than 50';
+                                    }
+                                    return null;
+                                  },
+                                  onSaved: (input) => _nameStr = input,
+                                ),
                               ),
-                            ),
-                            SizedBox(height: 5.0),
-                            Center(
-                              child: TextFormField(
-                                decoration: inputNameDecoration,
-                              ),
-                            ),
-                            SizedBox(height: 5.0),
-                          ],
+                              SizedBox(height: 5.0),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                    Container(
-                      padding: EdgeInsets.all(2.0),
-                      child: BaseContainerRight(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            CustomPaint(
-                              child: Padding(
-                                padding: const EdgeInsets.all(5.0),
-                                child: Center(
-                                  child: Text('School Name',
-                                    style: headingTextStyle,
+                      Container(
+                        padding: EdgeInsets.all(2.0),
+                        child: BaseContainerRight(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              CustomPaint(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(5.0),
+                                  child: Center(
+                                    child: Text('School Name',
+                                      style: headingTextStyle,
+                                    ),
                                   ),
                                 ),
+                                painter: RPSCustomPainter(
+                                ),
                               ),
-                              painter: RPSCustomPainter(
+                              SizedBox(height: 5.0),
+                              Center(
+                                child: TextFormField(
+                                  controller: schoolController,
+                                  decoration: inputSchoolDecoration,
+                                  validator: (value) {
+                                    if (value.isEmpty) {
+                                      return 'Cannot be blank';
+                                    }
+                                    if (value.length > 50) {
+                                      return 'Cannot be move than 50';
+                                    }
+                                    return null;
+                                  },
+                                  onSaved: (input) => _schoolStr = input,
+                                  onChanged: (value) {
+                                    filerSearchResult(value);
+                                  },
+                                ),
                               ),
-                            ),
-                            SizedBox(height: 5.0),
-                            Center(
-                              child: TextFormField(
-                                controller: schoolController,
-                                decoration: inputSchoolDecoration,
-                                onChanged: (value) {
-                                  filerSearchResult(value);
-                                },
-                              ),
-                            ),
-                            _viewListbool ? Container(
-                              height: 200.0,
-                              child: ListView.builder(
-                                itemCount: _viewList.length,
-                                itemBuilder: (context, index) {
-                                  return ListTile(
-                                    title: Text(
-                                      _viewList[index],
-                                      style: amountHeadingTextStyle,
-                                    ),
-                                    onTap: (){
-                                      //set the value for the school and board
-                                      schoolController.text = _viewList[index];
-                                      for(final element in _schoolList){
-                                        if(element.school == _viewList[index]){
-                                          boardController.text = element.board;
-                                          break;
+                              _viewListbool ? Container(
+                                height: 200.0,
+                                child: ListView.builder(
+                                  itemCount: _viewList.length,
+                                  itemBuilder: (context, index) {
+                                    return ListTile(
+                                      title: Text(
+                                        _viewList[index],
+                                        style: amountHeadingTextStyle,
+                                      ),
+                                      onTap: (){
+                                        //set the value for the school and board
+                                        schoolController.text = _viewList[index];
+                                        for(final element in _schoolList){
+                                          if(element.school == _viewList[index]){
+                                            boardController.text = element.board;
+                                            break;
+                                          }
                                         }
-                                      }
+                                        setState(() {
+                                          _viewListbool = false;
+                                        });
+                                      },
+                                    );
+                                  },
+                                ),
+                              )
+                                  : Container(),
+                              SizedBox(height: 5.0),
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 5.0),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            //height: MediaQuery.of(context).size.height/8,
+                            width: MediaQuery.of(context).size.width/2 - 5,
+                            //padding: EdgeInsets.all(2.0),
+                            child: BaseContainerLeft(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  CustomPaint(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(2.0),
+                                      child: Center(
+                                        child: Text('Board',
+                                          style: headingTextStyle,
+                                        ),
+                                      ),
+                                    ),
+                                    painter: RPSCustomPainter(
+                                    ),
+                                  ),
+                                  SizedBox(height: 5.0),
+                                  Center(
+                                    child: TextFormField(
+                                      controller: boardController,
+                                      decoration: inputBoardDecoration,
+                                      validator: (value) {
+                                        if (value.isEmpty) {
+                                          return 'Cannot be blank';
+                                        }
+                                        if (value.length > 10) {
+                                          return 'Cannot be move than 10';
+                                        }
+                                        return null;
+                                      },
+                                      onSaved: (input) => _boardStr = input,
+                                    ),
+                                  ),
+                                  SizedBox(height: 5.0),
+                                ],
+                              ),
+                            ),
+                          ),
+                          Container(
+                            //height: MediaQuery.of(context).size.height/8,
+                            width: MediaQuery.of(context).size.width/2 -5,
+                            child: BaseContainerLeft(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  CustomPaint(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(2.0),
+                                      child: Center(
+                                        child: Text('Admission fees',
+                                          style: headingTextStyle,
+                                        ),
+                                      ),
+                                    ),
+                                    painter: RPSCustomPainter(
+                                    ),
+                                  ),
+                                  SizedBox(height: 5.0),
+                                  Center(
+                                    child: TextFormField(
+                                      decoration: inputFeeDecoration,
+                                      keyboardType: TextInputType.number,
+                                      inputFormatters: [
+                                        FilteringTextInputFormatter.digitsOnly
+                                      ],
+                                      validator: (value) {
+                                        if (value.isEmpty) {
+                                          return 'Cannot be blank';
+                                        }
+                                        if (value.length > 5) {
+                                          return 'Cannot be move than 5';
+                                        }
+                                        return null;
+                                      },
+                                      onSaved: (input) => _admFeeStr = input,
+                                    ),
+                                  ),
+                                  SizedBox(height: 5.0),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+
+                      ),
+                      SizedBox(height: 10.0),
+                      Container(
+                        padding: EdgeInsets.all(2.0),
+                        child: BaseContainerRight(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              CustomPaint(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(5.0),
+                                  child: Center(
+                                    child: Text('Date of Admission (DoA)',
+                                      style: headingTextStyle,
+                                    ),
+                                  ),
+                                ),
+                                painter: RPSCustomPainter(
+                                ),
+                              ),
+                              SizedBox(height: 5.0),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    _dateValue,
+                                    style: amountHeadingTextStyle,
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  IconButton(
+                                    icon: Icon(Icons.date_range),
+                                    onPressed: () async {
+                                      String val = await callDatePicker(context);
                                       setState(() {
-                                        _viewListbool = false;
+                                        _dateValue = val;
                                       });
                                     },
-                                  );
-                                },
+                                  ),
+                                ],
                               ),
-                            )
-                                : Container(),
-                            SizedBox(height: 5.0),
-                          ],
+                              SizedBox(height: 5.0),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                    SizedBox(height: 5.0),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          //height: MediaQuery.of(context).size.height/8,
-                          width: MediaQuery.of(context).size.width/2 - 5,
-                          //padding: EdgeInsets.all(2.0),
-                          child: BaseContainerLeft(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                CustomPaint(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(2.0),
-                                    child: Center(
-                                      child: Text('Board',
-                                        style: headingTextStyle,
+                      SizedBox(height: 5.0),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            //height: MediaQuery.of(context).size.height/8,
+                            width: MediaQuery.of(context).size.width/2 - 5,
+                            //padding: EdgeInsets.all(2.0),
+                            child: BaseContainerLeft(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  CustomPaint(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(2.0),
+                                      child: Center(
+                                        child: Text('Contact Num',
+                                          style: headingTextStyle,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  painter: RPSCustomPainter(
-                                  ),
-                                ),
-                                SizedBox(height: 5.0),
-                                Center(
-                                  child: TextFormField(
-                                    controller: boardController,
-                                    decoration: inputBoardDecoration,
-                                  ),
-                                ),
-                                SizedBox(height: 5.0),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Container(
-                          //height: MediaQuery.of(context).size.height/8,
-                          width: MediaQuery.of(context).size.width/2 -5,
-                          child: BaseContainerLeft(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                CustomPaint(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(2.0),
-                                    child: Center(
-                                      child: Text('Admission fees',
-                                        style: headingTextStyle,
-                                      ),
+                                    painter: RPSCustomPainter(
                                     ),
                                   ),
-                                  painter: RPSCustomPainter(
+                                  SizedBox(height: 5.0),
+                                  Center(
+                                    child: TextFormField(
+                                      decoration: inputContactDecoration,
+                                      keyboardType: TextInputType.number,
+                                      inputFormatters: [
+                                        FilteringTextInputFormatter.digitsOnly
+                                      ],
+                                      validator: (value) {
+                                        if (value.isEmpty) {
+                                          return 'Cannot be blank';
+                                        }
+                                        if (value.length > 10) {
+                                          return 'Invalid Contact#';
+                                        }
+                                        return null;
+                                      },
+                                      onSaved: (input) => _contactNbrStr = input,
+                                    ),
                                   ),
-                                ),
-                                SizedBox(height: 5.0),
-                                Center(
-                                  child: TextFormField(
-                                    decoration: inputFeeDecoration,
-                                    keyboardType: TextInputType.number,
-                                    inputFormatters: [
-                                      FilteringTextInputFormatter.digitsOnly
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(height: 5.0),
-                              ],
+                                  SizedBox(height: 5.0),
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                          Container(
+                            //height: MediaQuery.of(context).size.height/8,
+                            width: MediaQuery.of(context).size.width/2 -5,
+                            child: BaseContainerLeft(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  CustomPaint(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(2.0),
+                                      child: Center(
+                                        child: Text('Gender',
+                                          style: headingTextStyle,
+                                        ),
+                                      ),
+                                    ),
+                                    painter: RPSCustomPainter(
+                                    ),
+                                  ),
+                                  //SizedBox(height: 5.0),
+                                  DropdownButton(
+                                    value: _genderValue,
+                                    onChanged: (newValue) {
+                                      setState(() {
+                                        _genderValue = newValue;
+                                      });
+                                    },
+                                    items: genderList.map((gender) {
+                                      return DropdownMenuItem(
+                                        child: Text(gender),
+                                        value: gender,
+                                      );
+                                    }).toList(),
+                                  ),
+                                  SizedBox(height: 5.0),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
 
-                    ),
-                    SizedBox(height: 10.0),
-                    Container(
-                      padding: EdgeInsets.all(2.0),
-                      child: BaseContainerRight(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            CustomPaint(
-                              child: Padding(
-                                padding: const EdgeInsets.all(5.0),
-                                child: Center(
-                                  child: Text('Date of Admission (DoA)',
-                                    style: headingTextStyle,
-                                  ),
-                                ),
-                              ),
-                              painter: RPSCustomPainter(
-                              ),
-                            ),
-                            SizedBox(height: 5.0),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  _dateValue,
-                                  style: amountHeadingTextStyle,
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                IconButton(
-                                  icon: Icon(Icons.date_range),
-                                  onPressed: () async {
-                                    String val = await callDatePicker(context);
-                                    setState(() {
-                                      _dateValue = val;
-                                    });
-                                  },
-                                ),
-                              ],
-                            ),
-                            SizedBox(height: 5.0),
-                          ],
-                        ),
                       ),
-                    ),
-                    SizedBox(height: 5.0),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          //height: MediaQuery.of(context).size.height/8,
-                          width: MediaQuery.of(context).size.width/2 - 5,
-                          //padding: EdgeInsets.all(2.0),
-                          child: BaseContainerLeft(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                CustomPaint(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(2.0),
-                                    child: Center(
-                                      child: Text('Contact Num',
-                                        style: headingTextStyle,
-                                      ),
+                      SizedBox(height: 5.0),
+                      Container(
+                        padding: EdgeInsets.all(2.0),
+                        child: BaseContainerRight(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              CustomPaint(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(5.0),
+                                  child: Center(
+                                    child: Text('Email ID',
+                                      style: headingTextStyle,
                                     ),
                                   ),
-                                  painter: RPSCustomPainter(
-                                  ),
                                 ),
-                                SizedBox(height: 5.0),
-                                Center(
-                                  child: TextFormField(
-                                    decoration: inputContactDecoration,
-                                    keyboardType: TextInputType.number,
-                                    inputFormatters: [
-                                      FilteringTextInputFormatter.digitsOnly
-                                    ],
-                                  ),
+                                painter: RPSCustomPainter(
                                 ),
-                                SizedBox(height: 5.0),
-                              ],
-                            ),
+                              ),
+                              SizedBox(height: 5.0),
+                              Center(
+                                child: TextFormField(
+                                  decoration: inputEmailDecoration,
+                                  onSaved: (input) => _emailIdStr = input,
+                                ),
+                              ),
+                              SizedBox(height: 5.0),
+                            ],
                           ),
-                        ),
-                        Container(
-                          //height: MediaQuery.of(context).size.height/8,
-                          width: MediaQuery.of(context).size.width/2 -5,
-                          child: BaseContainerLeft(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                CustomPaint(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(2.0),
-                                    child: Center(
-                                      child: Text('Gender',
-                                        style: headingTextStyle,
-                                      ),
-                                    ),
-                                  ),
-                                  painter: RPSCustomPainter(
-                                  ),
-                                ),
-                                //SizedBox(height: 5.0),
-                                DropdownButton(
-                                  value: _genderValue,
-                                  onChanged: (newValue) {
-                                    setState(() {
-                                      _genderValue = newValue;
-                                    });
-                                  },
-                                  items: genderList.map((gender) {
-                                    return DropdownMenuItem(
-                                      child: Text(gender),
-                                      value: gender,
-                                    );
-                                  }).toList(),
-                                ),
-                                SizedBox(height: 5.0),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-
-                    ),
-                    SizedBox(height: 5.0),
-                    Container(
-                      padding: EdgeInsets.all(2.0),
-                      child: BaseContainerRight(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            CustomPaint(
-                              child: Padding(
-                                padding: const EdgeInsets.all(5.0),
-                                child: Center(
-                                  child: Text('Email ID',
-                                    style: headingTextStyle,
-                                  ),
-                                ),
-                              ),
-                              painter: RPSCustomPainter(
-                              ),
-                            ),
-                            SizedBox(height: 5.0),
-                            Center(
-                              child: TextFormField(
-                                decoration: inputEmailDecoration,
-                              ),
-                            ),
-                            SizedBox(height: 5.0),
-                          ],
                         ),
                       ),
-                    ),
-                    SizedBox(height: 5.0),
-                  ],
+                      SizedBox(height: 5.0),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -408,8 +467,16 @@ class _AddPageOneState extends State<AddPageOne> {
                 padding: const EdgeInsets.symmetric(vertical: 20.0,horizontal: 15.0),
                 child: FloatingActionButton(
                   child: Icon(Icons.navigate_next, size: 50.0,),
-                  onPressed: () {
-                    //TODO make a call to subject list
+                  onPressed: () async {
+                    if (_formKey.currentState.validate()){
+                      _formKey.currentState.save();
+                      String emailId = _emailIdStr ?? '';
+                      AddStudentPersonalDetails addStudPerDetails = AddStudentPersonalDetails(_nameStr, widget.classNumStr,
+                          _schoolStr, _boardStr, _admFeeStr, _dateValue, _contactNbrStr, _genderValue, emailId);
+                      Navigator.push(context, MaterialPageRoute(builder: (context){
+                        return AddPageTwo(addstudentPerDtls: addStudPerDetails);
+                      }));
+                    }
                   },
                 ),
               ),
