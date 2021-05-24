@@ -42,14 +42,14 @@ class _SubjectTabState extends State<SubjectTab> {
       StudentDtlsService studentDtlsService = StudentDtlsService(branchId: sp.getString(AppPref.userIdPref),
           classNum: widget.classNumStr,studentId: widget.studentIdStr);
       dynamic httpResult = await studentDtlsService.selectStudentSubjectDtls(kSelectStudentSubjectDetails);
-      String possitiveStatus = 'true';
+      String positiveStatus = 'true';
       //failed as server end
       if(httpResult is String){
         EasyLoading.showToast(httpResult);
       }
       //data fetch from server end
-      if(httpResult['status'] == possitiveStatus) {
-        //Data i-s fetch successfully
+      if(httpResult['status'] == positiveStatus) {
+        //Data is fetch successfully
         httpResult['data'].forEach((element){
           subjectList.add(SubjectList(element[ST002P.facultyIdFld], element[ST002P.subjectFld], element[ST002P.feeFld],
               element[ST002P.dueFld], element[ST002P.dateOfEnrolFld]));

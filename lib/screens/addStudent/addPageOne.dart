@@ -1,6 +1,8 @@
 import 'package:fabtech_aspirationclass_dev/models/appPref.dart';
+import 'package:fabtech_aspirationclass_dev/utilites/constantValue.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fabtech_aspirationclass_dev/utilites/widgets/header.dart';
 import 'package:fabtech_aspirationclass_dev/utilites/widgets/topHeadline.dart';
 import 'package:fabtech_aspirationclass_dev/main.dart';
@@ -9,6 +11,10 @@ import 'package:fabtech_aspirationclass_dev/utilites/widgets/BaseContainerL.dart
 import 'package:fabtech_aspirationclass_dev/utilites/widgets/BaseContainerR.dart';
 import 'package:fabtech_aspirationclass_dev/utilites/stringListValues.dart';
 import 'package:fabtech_aspirationclass_dev/utilites/getDate.dart';
+import 'package:fabtech_aspirationclass_dev/services/addStudentOpt.dart';
+import 'package:fabtech_aspirationclass_dev/models/ST001P.dart';
+import 'package:fabtech_aspirationclass_dev/utilites/widgets/progress.dart';
+import 'package:intl/intl.dart';
 
 
 class AddPageOne extends StatefulWidget {
@@ -22,6 +28,31 @@ class AddPageOne extends StatefulWidget {
 class _AddPageOneState extends State<AddPageOne> {
   String _genderValue = genderList[0];
   String _dateValue = 'DD/MM/YY';
+  DateTime _now = DateTime.now();
+  List<SchoolList> _schoolList;
+  List<String> _viewList;
+  bool _isLoading = true;
+  bool _viewListbool = false;
+
+  //controller for the edit text
+  TextEditingController schoolController = TextEditingController();
+  TextEditingController boardController = TextEditingController();
+
+  @override
+  void initState() {
+    //init the array as empty;
+    _schoolList =[];
+    _viewList = [];
+    //Set admission date to today's date
+    var formatter = new DateFormat('dd-MM-yyyy');
+    String formattedDate = formatter.format(_now);
+    setState(() {
+      _dateValue = formattedDate;
+    });
+    //Call method to get the list of schools
+    getSchoolList(widget.classNumStr);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +68,7 @@ class _AddPageOneState extends State<AddPageOne> {
               colors: [Colors.deepPurple.shade600, Colors.teal.shade400]
           ),
         ),
-        child: Stack(
+        child: _isLoading ? circularProgress() : Stack(
           children: [
             Align(
               alignment: Alignment.topCenter,
@@ -85,7 +116,7 @@ class _AddPageOneState extends State<AddPageOne> {
                               child: Padding(
                                 padding: const EdgeInsets.all(5.0),
                                 child: Center(
-                                  child: Text('Email ID',
+                                  child: Text('School Name',
                                     style: headingTextStyle,
                                   ),
                                 ),
@@ -96,8 +127,159 @@ class _AddPageOneState extends State<AddPageOne> {
                             SizedBox(height: 5.0),
                             Center(
                               child: TextFormField(
-                                decoration: inputEmailDecoration,
+                                controller: schoolController,
+                                decoration: inputSchoolDecoration,
+                                onChanged: (value) {
+                                  filerSearchResult(value);
+                                },
                               ),
+                            ),
+                            _viewListbool ? Container(
+                              height: 200.0,
+                              child: ListView.builder(
+                                itemCount: _viewList.length,
+                                itemBuilder: (context, index) {
+                                  return ListTile(
+                                    title: Text(
+                                      _viewList[index],
+                                      style: amountHeadingTextStyle,
+                                    ),
+                                    onTap: (){
+                                      //set the value for the school and board
+                                      schoolController.text = _viewList[index];
+                                      for(final element in _schoolList){
+                                        if(element.school == _viewList[index]){
+                                          boardController.text = element.board;
+                                          break;
+                                        }
+                                      }
+                                      setState(() {
+                                        _viewListbool = false;
+                                      });
+                                    },
+                                  );
+                                },
+                              ),
+                            )
+                                : Container(),
+                            SizedBox(height: 5.0),
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 5.0),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          //height: MediaQuery.of(context).size.height/8,
+                          width: MediaQuery.of(context).size.width/2 - 5,
+                          //padding: EdgeInsets.all(2.0),
+                          child: BaseContainerLeft(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                CustomPaint(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(2.0),
+                                    child: Center(
+                                      child: Text('Board',
+                                        style: headingTextStyle,
+                                      ),
+                                    ),
+                                  ),
+                                  painter: RPSCustomPainter(
+                                  ),
+                                ),
+                                SizedBox(height: 5.0),
+                                Center(
+                                  child: TextFormField(
+                                    controller: boardController,
+                                    decoration: inputBoardDecoration,
+                                  ),
+                                ),
+                                SizedBox(height: 5.0),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Container(
+                          //height: MediaQuery.of(context).size.height/8,
+                          width: MediaQuery.of(context).size.width/2 -5,
+                          child: BaseContainerLeft(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                CustomPaint(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(2.0),
+                                    child: Center(
+                                      child: Text('Admission fees',
+                                        style: headingTextStyle,
+                                      ),
+                                    ),
+                                  ),
+                                  painter: RPSCustomPainter(
+                                  ),
+                                ),
+                                SizedBox(height: 5.0),
+                                Center(
+                                  child: TextFormField(
+                                    decoration: inputFeeDecoration,
+                                    keyboardType: TextInputType.number,
+                                    inputFormatters: [
+                                      FilteringTextInputFormatter.digitsOnly
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(height: 5.0),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+
+                    ),
+                    SizedBox(height: 10.0),
+                    Container(
+                      padding: EdgeInsets.all(2.0),
+                      child: BaseContainerRight(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            CustomPaint(
+                              child: Padding(
+                                padding: const EdgeInsets.all(5.0),
+                                child: Center(
+                                  child: Text('Date of Admission (DoA)',
+                                    style: headingTextStyle,
+                                  ),
+                                ),
+                              ),
+                              painter: RPSCustomPainter(
+                              ),
+                            ),
+                            SizedBox(height: 5.0),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  _dateValue,
+                                  style: amountHeadingTextStyle,
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                IconButton(
+                                  icon: Icon(Icons.date_range),
+                                  onPressed: () async {
+                                    String val = await callDatePicker(context);
+                                    setState(() {
+                                      _dateValue = val;
+                                    });
+                                  },
+                                ),
+                              ],
                             ),
                             SizedBox(height: 5.0),
                           ],
@@ -196,53 +378,7 @@ class _AddPageOneState extends State<AddPageOne> {
                               child: Padding(
                                 padding: const EdgeInsets.all(5.0),
                                 child: Center(
-                                  child: Text('Date of Admission (DoA)',
-                                    style: headingTextStyle,
-                                  ),
-                                ),
-                              ),
-                              painter: RPSCustomPainter(
-                              ),
-                            ),
-                            SizedBox(height: 5.0),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  _dateValue,
-                                  style: amountHeadingTextStyle,
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                IconButton(
-                                  icon: Icon(Icons.date_range),
-                                  onPressed: () async {
-                                    String val = await callDatePicker(context);
-                                    setState(() {
-                                      _dateValue = val;
-                                    });
-                                  },
-                                ),
-                              ],
-                            ),
-                            SizedBox(height: 5.0),
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 5.0),
-                    Container(
-                      padding: EdgeInsets.all(2.0),
-                      child: BaseContainerRight(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            CustomPaint(
-                              child: Padding(
-                                padding: const EdgeInsets.all(5.0),
-                                child: Center(
-                                  child: Text('School Name',
+                                  child: Text('Email ID',
                                     style: headingTextStyle,
                                   ),
                                 ),
@@ -253,7 +389,7 @@ class _AddPageOneState extends State<AddPageOne> {
                             SizedBox(height: 5.0),
                             Center(
                               child: TextFormField(
-                                decoration: inputSchoolDecoration,
+                                decoration: inputEmailDecoration,
                               ),
                             ),
                             SizedBox(height: 5.0),
@@ -262,78 +398,6 @@ class _AddPageOneState extends State<AddPageOne> {
                       ),
                     ),
                     SizedBox(height: 5.0),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          //height: MediaQuery.of(context).size.height/8,
-                          width: MediaQuery.of(context).size.width/2 - 5,
-                          //padding: EdgeInsets.all(2.0),
-                          child: BaseContainerLeft(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                CustomPaint(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(2.0),
-                                    child: Center(
-                                      child: Text('Board',
-                                        style: headingTextStyle,
-                                      ),
-                                    ),
-                                  ),
-                                  painter: RPSCustomPainter(
-                                  ),
-                                ),
-                                SizedBox(height: 5.0),
-                                Center(
-                                  child: TextFormField(
-                                    decoration: inputBoardDecoration,
-                                  ),
-                                ),
-                                SizedBox(height: 5.0),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Container(
-                          //height: MediaQuery.of(context).size.height/8,
-                          width: MediaQuery.of(context).size.width/2 -5,
-                          child: BaseContainerLeft(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                CustomPaint(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(2.0),
-                                    child: Center(
-                                      child: Text('Admission fees',
-                                        style: headingTextStyle,
-                                      ),
-                                    ),
-                                  ),
-                                  painter: RPSCustomPainter(
-                                  ),
-                                ),
-                                SizedBox(height: 5.0),
-                                Center(
-                                  child: TextFormField(
-                                    decoration: inputFeeDecoration,
-                                    keyboardType: TextInputType.number,
-                                    inputFormatters: [
-                                      FilteringTextInputFormatter.digitsOnly
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(height: 5.0),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-
-                    ),
-                    SizedBox(height: 10.0),
                   ],
                 ),
               ),
@@ -355,6 +419,62 @@ class _AddPageOneState extends State<AddPageOne> {
       ),
     );
   }
+
+  //Method to get the list of school, currently preset in the coaching center
+  getSchoolList(String classNumber) async {
+    try {
+      AddStudentOpt addStudentOpt = AddStudentOpt(classNbr: classNumber);
+      dynamic httpResult = await addStudentOpt.getSchoolList(kAddStudentOptions, 'One');
+      String positiveStatus = 'true';
+      //failed as server end
+      if(httpResult is String){
+        EasyLoading.showToast(httpResult);
+      }
+      //data fetch from server end
+      if(httpResult['status'] == positiveStatus){
+        //Data is fetch successfully
+        httpResult['data'].forEach((element){
+          _schoolList.add(SchoolList(element[ST001P.schoolFld], element[ST001P.boardFld]));
+        });
+      }
+  } catch (e) {
+      EasyLoading.showToast(e);
+    }
+    //finally hide the progress bar
+    setState(() {
+      _isLoading = false;
+    });
+  }
+  //
+  //Method to search for the school
+  void filerSearchResult(String query) {
+    if (_schoolList.isNotEmpty) {
+      if (query.isNotEmpty) {
+        List<String> dummyList = [];
+        _schoolList.forEach((element) {
+          if (element.school.toUpperCase().contains(query.toUpperCase())) {
+            dummyList.add(element.school);
+          }
+        });
+        setState(() {
+          if (dummyList.isNotEmpty) {
+            _viewList.clear();
+            _viewList.addAll(dummyList);
+            _viewListbool = true;
+          } else {
+            _viewList.clear();
+            _viewListbool = false;
+          }
+        });
+      } else {
+        setState(() {
+          _viewList.clear();
+          _viewListbool = false;
+        });
+      }
+    }
+  }
+
 }
 
 const headingTextStyle = TextStyle(
@@ -464,3 +584,8 @@ const inputFeeDecoration = InputDecoration(
     BorderSide(width: 3,color: Colors.redAccent,style: BorderStyle.solid),
   ),
 );
+
+class SchoolList {
+  final String school,board;
+  SchoolList(this.school,this.board);
+}
