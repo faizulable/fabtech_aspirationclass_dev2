@@ -99,8 +99,42 @@ class _AddPageTwoState extends State<AddPageTwo> {
                       child: ListView.builder(
                         itemCount: subjectList.length,
                         itemBuilder:(BuildContext context, int index) {
-                          return ListSubjectWidget(facultyId: subjectList[index].facultyId,subject: subjectList[index].subject,
-                              fee: subjectList[index].fee,due: subjectList[index].due,dateOfEnrol: subjectList[index].dateOfenrol);
+                          return Dismissible(
+                            key: UniqueKey(),
+                            background: _myHiddenContainer(index),
+                            onDismissed: (direction){
+                              if(direction == DismissDirection.startToEnd ) {
+                                int totalAmount = int.parse(_totalAmountStr);
+                                int totalDues = int.parse(_totalDuesStr);
+                                totalAmount = totalAmount - int.parse(subjectList[index].fee);
+                                totalDues = totalDues - int.parse(subjectList[index].due);
+                                //if(subjectList.contains(subjectList.removeAt(index))) {
+                                  setState(() {
+                                     subjectList.removeAt(index);
+                                    _totalDuesStr = totalDues.toString();
+                                    _totalAmountStr = totalAmount.toString();
+                                    _subjectCount = subjectList.length.toString();
+                                  });
+                                //}
+                              }
+                              if(direction == DismissDirection.endToStart ) {
+                                int totalAmount = int.parse(_totalAmountStr);
+                                int totalDues = int.parse(_totalDuesStr);
+                                totalAmount = totalAmount - int.parse(subjectList[index].fee);
+                                totalDues = totalDues - int.parse(subjectList[index].due);
+                                //if(subjectList.contains(subjectList.removeAt(index))) {
+                                  setState(() {
+                                     subjectList.removeAt(index);
+                                    _totalDuesStr = totalDues.toString();
+                                    _totalAmountStr = totalAmount.toString();
+                                    _subjectCount = subjectList.length.toString();
+                                  });
+                                //}
+                              }
+                            },
+                            child: ListSubjectWidget(facultyId: subjectList[index].facultyId,subject: subjectList[index].subject,
+                                fee: subjectList[index].fee,due: subjectList[index].due,dateOfEnrol: subjectList[index].dateOfenrol),
+                          );
                         },
                       ),
                     ),
@@ -115,12 +149,12 @@ class _AddPageTwoState extends State<AddPageTwo> {
                           int totalAmount = 0;
                           int totalDues = 0;
                           await _showAddSubjectDialog();
+                          dropDownSubjectList.clear();
                           for(int indx=0; indx<subjectList.length;indx++){
                             totalAmount = totalAmount + int.parse(subjectList[indx].fee);
                             totalDues = totalDues + int.parse(subjectList[indx].due);
                           }
                           setState(() {
-                            //subjectList.isNotEmpty;
                             _totalAmountStr = totalAmount.toString();
                             _totalDuesStr = totalDues.toString();
                             _subjectCount = subjectList.length.toString();
@@ -198,9 +232,10 @@ class _AddPageTwoState extends State<AddPageTwo> {
         return StatefulBuilder(builder: (context, StateSetter setState){
           return AlertDialog(
             contentPadding: EdgeInsets.all(5.0),
+            backgroundColor: Colors.teal.shade100,
             title: Center(
               child: Text(
-                'New Subject',
+                'ADD SUBJECT',
                 style: mainHeadingTextStyle,
               ),
             ),
@@ -235,11 +270,11 @@ class _AddPageTwoState extends State<AddPageTwo> {
                               onChanged: onChangeEnable ? (newValue) {
                                 setState(() {
                                   windowFaculty = newValue;
-                                  dropDownSubjectList.clear();
                                   for(final element in facultyList){
                                     if(element.facultyID == newValue) {
-                                      dropDownSubjectList.add(element.subject);
-                                      print(element.subject);
+                                      if(!dropDownSubjectList.contains(element.subject)){
+                                        dropDownSubjectList.add(element.subject);
+                                      }
                                     }
                                   }
                                 });
@@ -286,10 +321,14 @@ class _AddPageTwoState extends State<AddPageTwo> {
                                 });
                               },
                               items: dropDownSubjectList.map((item) {
-                                return DropdownMenuItem(
-                                  child: Text(item),
-                                  value: item,
-                                );
+                                try{
+                                  return DropdownMenuItem(
+                                    child: Text(item),
+                                    value: item,
+                                  );
+                                }catch(e){
+                                  print('Error in dropdown Subjectlist');
+                                }
                               }).toList(),
                             ),
                           ],
@@ -441,7 +480,8 @@ class _AddPageTwoState extends State<AddPageTwo> {
                 onPressed: () {
                   if (formKey.currentState.validate()) {
                     formKey.currentState.save();
-                    if(windowFaculty == 'Select Teacher')
+                    if(windowFaculty == 'Select Teacher' || windowFaculty == '' || windowSubject=='' ||
+                        windowFaculty == null || windowSubject==null)
                     {
                       EasyLoading.showToast('Select teacher');
                     }
@@ -471,6 +511,39 @@ class _AddPageTwoState extends State<AddPageTwo> {
           );
         });
       },
+    );
+  }
+//
+// Dismissible swipe view
+  Widget _myHiddenContainer(int position){
+    return Container(
+      height: 100,
+      color: Colors.redAccent,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Align(
+            alignment: Alignment.centerLeft,
+            child: IconButton(
+                icon: Icon(Icons.delete),
+                color: Colors.white,
+                onPressed: (){
+                  setState(() {
+                    //if required then add code action on swipe
+                  });
+                }),
+          ),
+          Align(
+            alignment: Alignment.centerRight,
+            child: IconButton(
+                icon: Icon(Icons.delete),
+                color: Colors.white,
+                onPressed: (){
+                  //if required then add code action on swipe
+                }),
+          ),
+        ],
+      ),
     );
   }
 //
