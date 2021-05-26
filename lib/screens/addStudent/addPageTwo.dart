@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'dart:convert';
 import 'package:fabtech_aspirationclass_dev/utilites/widgets/header.dart';
 import 'package:fabtech_aspirationclass_dev/utilites/widgets/topHeadline.dart';
 import 'package:fabtech_aspirationclass_dev/models/addStudent.dart';
 import 'package:fabtech_aspirationclass_dev/screens/addStudent/listWidgetSubject.dart';
 import 'package:fabtech_aspirationclass_dev/services/addStudentOpt.dart';
+import 'package:fabtech_aspirationclass_dev/services/addStudentCreate.dart';
 import 'package:fabtech_aspirationclass_dev/models/ST002P.dart';
 import 'package:fabtech_aspirationclass_dev/utilites/constantValue.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -27,6 +29,7 @@ class _AddPageTwoState extends State<AddPageTwo> {
   String _totalDuesStr = '000';
   String _subjectCount = '0';
   bool _isLoading = true;
+  bool _exitScreen = false;
   List<SubjectList> subjectList =[];
   List<FacultyList> facultyList =[];
   List<String> dropDownFacultyNameList =[];
@@ -180,6 +183,20 @@ class _AddPageTwoState extends State<AddPageTwo> {
                 //icon: Icon(Icons.exit_to_app_rounded),
                 child: Text('Save'),
                 onPressed: () async {
+                  if(subjectList.length > 0 ){
+                    EasyLoading.show(status: 'wait..', maskType: EasyLoadingMaskType.none);
+                    String jsonSubList = jsonEncode(subjectList);
+                    //print(jsonSubList);
+                    bool httpResult = await createStudent(jsonSubList);
+                    EasyLoading.dismiss();
+                    //record is successfully added, exit the screen
+                    if(httpResult){
+                      _exitScreen = true;
+                      Navigator.pop(context, _exitScreen);
+                    }
+                  } else {
+                    EasyLoading.showToast('Please add Subject.');
+                  }
                 },
               ),
             ),
@@ -547,12 +564,46 @@ class _AddPageTwoState extends State<AddPageTwo> {
     );
   }
 //
-
+//Method to create Student
+  Future<bool> createStudent(String jsonList) async {
+    try {
+      CreateStudentService createStudentService = CreateStudentService();
+      dynamic httpResult = await createStudentService.createStudent(kCreateNewStudent,widget.addstudentPerDtls,
+        jsonList,_totalAmountStr,_totalDuesStr);
+      String positiveStatus = 'true';
+      //failed as server end
+      if(httpResult is String){
+        EasyLoading.showToast(httpResult);
+        return false;
+      }
+      //data fetch from server end
+      if(httpResult['status'] == positiveStatus){
+        //Data created successfully
+        EasyLoading.showToast(httpResult['message']);
+        return true;
+      } else {
+        EasyLoading.showToast(httpResult['message']);
+        return false;
+      }
+    } catch (e) {
+      EasyLoading.showToast(e);
+      return false;
+    }
+  }
+//
 }
 
 class SubjectList {
   final String facultyId,subject,fee,due,dateOfenrol;
   SubjectList(this.facultyId,this.subject,this.fee,this.due,this.dateOfenrol);
+
+  Map toJson() => {
+    ST002P.facultyIdFld: facultyId,
+    ST002P.subjectFld: subject,
+    ST002P.feeFld: fee,
+    ST002P.dueFld: due,
+    ST002P.dateOfEnrolFld: dateOfenrol,
+  };
 }
 
 class FacultyList {

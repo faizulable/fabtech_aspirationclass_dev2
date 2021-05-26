@@ -473,9 +473,14 @@ class _AddPageOneState extends State<AddPageOne> {
                       String emailId = _emailIdStr ?? '';
                       AddStudentPersonalDetails addStudPerDetails = AddStudentPersonalDetails(_nameStr, widget.classNumStr,
                           _schoolStr, _boardStr, _admFeeStr, _dateValue, _contactNbrStr, _genderValue, emailId);
-                      Navigator.push(context, MaterialPageRoute(builder: (context){
+                      bool result = await Navigator.push(context, MaterialPageRoute(builder: (context){
                         return AddPageTwo(addstudentPerDtls: addStudPerDetails);
-                      }));
+                      })) ?? false;
+
+                      // if record is added successfully, then exit the screen
+                      if(result){
+                        Navigator.pop(context,result);
+                      }
                     }
                   },
                 ),

@@ -5,7 +5,7 @@ class CT001P {
   static final String contactNumberFld = 'CONTACT';
   static final String addressFld = 'ADDRESS';
   static final String typeFld = 'TYPE';
-  static final String monthlyIncomeFld = 'MONTH_INCOME';
+  static final String onHandFld = 'ON_HAND';
   static final String duesFld = 'TOTAL_DUES';
   static final String createUserFld = 'CREATE_USER';
   static final String createDateFld = 'CREATE_DATE';

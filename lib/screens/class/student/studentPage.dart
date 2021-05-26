@@ -182,10 +182,17 @@ class _StudentPageState extends State<StudentPage> {
                       padding: const EdgeInsets.all(15.0),
                       child: FloatingActionButton(
                         child: Icon(Icons.add),
-                        onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context){
+                        onPressed: () async{
+                          bool result = await Navigator.push(context, MaterialPageRoute(builder: (context){
                             return AddPageOne(classNumStr: widget.classNum);
-                          }));
+                          })) ?? false;
+                          // if new record is created, then refresh the student list
+                          if(result){
+                            setState(() {
+                              _isloading = true;
+                            });
+                            getStudentList();
+                          }
                         },
                       ),
                     ),
