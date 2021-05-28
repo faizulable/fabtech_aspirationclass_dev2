@@ -16,6 +16,7 @@ import 'package:fabtech_aspirationclass_dev/utilites/widgets/BaseContainerL.dart
 import 'package:fabtech_aspirationclass_dev/utilites/widgets/BaseContainerR.dart';
 import 'package:fabtech_aspirationclass_dev/customPainter/LabelCustomPainter.dart';
 import 'package:fabtech_aspirationclass_dev/utilites/getDate.dart';
+import 'package:fabtech_aspirationclass_dev/utilites/getConfirmation.dart';
 
 class SubjectTab extends StatefulWidget {
   final String classNumStr,studentIdStr,studnetNameStr;
@@ -181,7 +182,10 @@ class _SubjectTabState extends State<SubjectTab> {
                           itemCount: subjectList.length,
                           itemBuilder:(BuildContext context, int index) {
                             return ListSubjectWidget(facultyId: subjectList[index].facultyId,subject: subjectList[index].subject,
-                                fee: subjectList[index].fee,due: subjectList[index].due,status: subjectList[index].status,dateOfEnrol: subjectList[index].dateOfenrol);
+                                fee: subjectList[index].fee,due: subjectList[index].due,status: subjectList[index].status, dateOfEnrol: subjectList[index].dateOfenrol,
+                              crossFunction: (){
+                                crossFunction(index);
+                              });
                           },
                         ),
                       ),
@@ -501,8 +505,8 @@ class _SubjectTabState extends State<SubjectTab> {
       },
     );
   }
-//
-//Method to get the list of teachers, currently preset in the class
+  //
+  //Method to create subject record
   addNewSubject(String classNumber,String studentId,String facultyId,String subject,
       String enrolDate, String monthlyFees, String totalDues) async {
     //finally hide the progress bar
@@ -539,8 +543,53 @@ class _SubjectTabState extends State<SubjectTab> {
       });
     }
   }
-//
+  //
 
+   crossFunction(int index) async {
+    bool confirm = await confirmationDialog(context,'Do you want to remove student from this class ?');
+    if(confirm){
+      removeSubject(widget.classNumStr,widget.studentIdStr,
+          subjectList[index].facultyId,subjectList[index].subject);
+    }
+  }
+
+//Method to remove subject record
+  removeSubject(String classNumber,String studentId,String facultyId,String subject) async {
+    //finally hide the progress bar
+    setState(() {
+      _isloading = true;
+    });
+    try {
+      AddStudentSubjectService addStudentSubjectService = AddStudentSubjectService();
+      dynamic httpResult = await addStudentSubjectService.removeSubject(kRemoveStudentSubject,studentId,facultyId,
+          subject,classNumber);
+      String positiveStatus = 'true';
+      //failed as server end
+      if(httpResult is String){
+        EasyLoading.showToast(httpResult);
+        setState(() {
+          _isloading = false;
+        });
+      }
+      //data fetch from server end
+      if(httpResult['status'] == positiveStatus){
+        //Data is updated successfully
+        EasyLoading.showToast(httpResult['message']);
+        getStudentSubjectDtls ();
+      } else {
+        EasyLoading.showToast(httpResult['message']);
+        setState(() {
+          _isloading = false;
+        });
+      }
+    } catch (e) {
+      EasyLoading.showToast(e);
+      setState(() {
+        _isloading = false;
+      });
+    }
+  }
+//
 }
 
 class SubjectList {
@@ -566,7 +615,7 @@ const amountHeadingTextStyle = TextStyle(
 
 const mainHeadingTextStyle = TextStyle(
   color: Colors.red,
-  fontSize: 25,
+  fontSize: 30,
   fontFamily: 'yellowRabbit',
 );
 
@@ -590,4 +639,10 @@ const inputFeeDecoration = InputDecoration(
     borderSide:
     BorderSide(width: 3,color: Colors.redAccent,style: BorderStyle.solid),
   ),
+);
+
+const windowTextStyle = TextStyle(
+  color: Colors.black,
+  fontSize: 20,
+  fontFamily: 'Swansea',
 );

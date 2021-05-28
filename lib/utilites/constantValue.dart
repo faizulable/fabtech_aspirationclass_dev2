@@ -13,6 +13,7 @@ const kSelectStudentSubjectDetails = 'selectStudentSubjects.php';
 const kAddStudentOptions = 'addStudentOpt.php';
 const kCreateNewStudent = 'createNewStudent.php';
 const kCreateStudentSubject = 'createStudentSubject.php';
+const kRemoveStudentSubject = 'removeStudentFromSubject.php';
 
 
 

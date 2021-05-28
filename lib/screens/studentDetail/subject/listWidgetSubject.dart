@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 class ListSubjectWidget extends StatelessWidget {
   final String facultyId,subject,fee,due,status,dateOfEnrol;
-  ListSubjectWidget({this.facultyId,this.subject,this.fee,this.due,this.status,this.dateOfEnrol});
+  final Function crossFunction;
+  ListSubjectWidget({this.facultyId,this.subject,this.fee,this.due,this.status,this.dateOfEnrol,this.crossFunction});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +20,7 @@ class ListSubjectWidget extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(20)),
         ),
-        color: (status == 'A') ? Colors.teal.shade100 : Colors.grey.shade600,
+        color: (status == 'A') ? Colors.teal.shade100 : Colors.grey,
         child: SizedBox(
           height: 100.0,
           child: Stack(
@@ -32,19 +33,42 @@ class ListSubjectWidget extends StatelessWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Container(
-                          alignment: Alignment.centerLeft,
-                          decoration: BoxDecoration(
-                            color: _isDefaulter ? Colors.red : Colors.teal.shade400,
-                            borderRadius: BorderRadius.all(Radius.circular(25)),
-                            shape: BoxShape.rectangle,
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(5.0),
-                            child: Text(facultyId,
-                            style: studentIdTextStyle,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: Container(
+                                alignment: Alignment.centerLeft,
+                                decoration: BoxDecoration(
+                                  color: _isDefaulter ? Colors.red : Colors.teal.shade400,
+                                  borderRadius: BorderRadius.all(Radius.circular(25)),
+                                  shape: BoxShape.rectangle,
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(5.0),
+                                  child: Text(facultyId,
+                                    style: studentIdTextStyle,
+                                  ),
+                                ),
+                              ),
                             ),
-                          ),
+                            SizedBox(width: 5.0),
+                            (status == 'A') ? GestureDetector(
+                              child: Container(
+                                alignment: Alignment.centerLeft,
+                                decoration: BoxDecoration(
+                                  color: _isDefaulter ? Colors.red : Colors.teal.shade400,
+                                  borderRadius: BorderRadius.all(Radius.circular(90)),
+                                  shape: BoxShape.rectangle,
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(2.0),
+                                  child: Icon(Icons.clear),
+                                  ),
+                                ),
+                              onTap: crossFunction,
+                            ) : Container(),
+                          ],
                         ),
                         SizedBox(height: 10.0),
                         Container(
