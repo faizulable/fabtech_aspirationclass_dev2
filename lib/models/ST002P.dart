@@ -9,6 +9,7 @@ class ST002P {
   static final String facShareFld = 'SHARE_FAC';
   static final String aspShareFld = 'SHARE_BAR';
   static final String dueFld = 'DUE';
+  static final String statusFld = 'STATUS';
   static final String updUserFld = 'UPD_USER';
   static final String updDateFld = 'UPD_DATE';
   static final String updTimeFld = 'UPD_TIME';

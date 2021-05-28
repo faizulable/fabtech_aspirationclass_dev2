@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-const kRootlink = "http://192.168.0.100/AspirationClasses/";
+const kRootlink = "http://192.168.0.109/AspirationClasses/";
 const kRegisterUser = 'registration.php';
 const kDeleteRegRequest = 'deleteRegReqst.php';
 const kSignIn = 'signIn.php';
@@ -12,6 +12,7 @@ const kSelectStudentPersonalDetails = 'selectStudentPersonalDetails.php';
 const kSelectStudentSubjectDetails = 'selectStudentSubjects.php';
 const kAddStudentOptions = 'addStudentOpt.php';
 const kCreateNewStudent = 'createNewStudent.php';
+const kCreateStudentSubject = 'createStudentSubject.php';
 
 
 

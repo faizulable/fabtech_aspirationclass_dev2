@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class ListSubjectWidget extends StatelessWidget {
-  final String facultyId,subject,fee,due,dateOfEnrol;
-  ListSubjectWidget({this.facultyId,this.subject,this.fee,this.due,this.dateOfEnrol});
+  final String facultyId,subject,fee,due,status,dateOfEnrol;
+  ListSubjectWidget({this.facultyId,this.subject,this.fee,this.due,this.status,this.dateOfEnrol});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class ListSubjectWidget extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(20)),
         ),
-        color: Colors.teal.shade100,
+        color: (status == 'A') ? Colors.teal.shade100 : Colors.grey.shade600,
         child: SizedBox(
           height: 100.0,
           child: Stack(
