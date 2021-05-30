@@ -25,24 +25,25 @@ class _MainDetailState extends State<MainDetail> {
           activeColor: Colors.purple,
           items: [
             BottomNavigationBarItem(
-              icon: Icon(Icons.assignment_ind),
-              label: 'Personal',
-            ),
-            BottomNavigationBarItem(
               icon: Icon(Icons.book),
               label: 'Subject',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.assignment_ind),
+              label: 'Personal',
             ),
           ],
         ),
         tabBuilder: (context,index){
           if(index == 0) {
-            return  CupertinoTabView(
-              builder: (BuildContext context) => PersonalTab(classNumStr: widget.studentClass,
-                studentIdStr: widget.studentId,studnetNameStr: widget.studentName),
-            );
-          } else {
             return CupertinoTabView(
               builder: (BuildContext context) => SubjectTab(classNumStr: widget.studentClass,
+                  studentIdStr: widget.studentId,studnetNameStr: widget.studentName),
+            );
+          } else {
+
+            return  CupertinoTabView(
+              builder: (BuildContext context) => PersonalTab(classNumStr: widget.studentClass,
                   studentIdStr: widget.studentId,studnetNameStr: widget.studentName),
             );
           }

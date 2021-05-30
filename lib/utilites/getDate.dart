@@ -15,8 +15,10 @@ Future<DateTime> getDate(BuildContext context) {
     context: context,
     initialDate: DateTime.now(),
     helpText: 'Select Date of Admission',
-    firstDate: DateTime(2020),
-    lastDate: DateTime(2035),
+    //firstDate: DateTime(2020),
+    firstDate: DateTime.now().subtract(Duration(days: 730)),
+    //lastDate: DateTime(2035),
+    lastDate: DateTime.now().add(Duration(days: 30)),
     builder: (BuildContext context, Widget child) {
       return Theme(
         data: ThemeData.light().copyWith(
