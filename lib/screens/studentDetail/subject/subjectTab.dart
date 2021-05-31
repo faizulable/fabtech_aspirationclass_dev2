@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:fabtech_aspirationclass_dev/utilites/widgets/topHeadline.dart';
 import 'package:fabtech_aspirationclass_dev/screens/studentDetail/subject/listWidgetSubject.dart';
+import 'package:fabtech_aspirationclass_dev/screens/paymentDetail/dues/dueTab.dart';
 import 'package:fabtech_aspirationclass_dev/services/studentDtls.dart';
 import 'package:fabtech_aspirationclass_dev/services/addStudentOpt.dart';
 import 'package:fabtech_aspirationclass_dev/services/addStudentSubject.dart';
@@ -181,11 +182,19 @@ class _SubjectTabState extends State<SubjectTab> {
                         child: ListView.builder(
                           itemCount: subjectList.length,
                           itemBuilder:(BuildContext context, int index) {
-                            return ListSubjectWidget(facultyId: subjectList[index].facultyId,subject: subjectList[index].subject,
-                                fee: subjectList[index].fee,due: subjectList[index].due,status: subjectList[index].status, dateOfEnrol: subjectList[index].dateOfenrol,
-                              crossFunction: (){
-                                crossFunction(index);
-                              });
+                            return GestureDetector(
+                              child: ListSubjectWidget(facultyId: subjectList[index].facultyId,subject: subjectList[index].subject,
+                                  fee: subjectList[index].fee,due: subjectList[index].due,status: subjectList[index].status, dateOfEnrol: subjectList[index].dateOfenrol,
+                                crossFunction: (){
+                                  crossFunction(index);
+                                }),
+                              onTap: (){
+                                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                  return DueTab(studentName: widget.studnetNameStr,studentId: widget.studentIdStr,
+                                  facultyId: subjectList[index].facultyId,subject: subjectList[index].subject);
+                                }));
+                              },
+                            );
                           },
                         ),
                       ),
