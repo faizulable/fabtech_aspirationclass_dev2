@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:fabtech_aspirationclass_dev/utilites/widgets/topHeadline.dart';
 import 'package:fabtech_aspirationclass_dev/screens/paymentDetail/dues/listWidgetDue.dart';
+import 'package:fabtech_aspirationclass_dev/services/processDue.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:fabtech_aspirationclass_dev/utilites/constantValue.dart';
+import 'package:fabtech_aspirationclass_dev/models/PY002P.dart';
+import 'package:fabtech_aspirationclass_dev/utilites/widgets/progress.dart';
 
 class DueTab extends StatefulWidget {
   final String facultyId,subject,studentId,studentName;
@@ -13,16 +18,114 @@ class _DueTabState extends State<DueTab> {
   String _facultyNameStr = 'Teacher Name';
   String _totalAmountStr = '0000';
   List<DueList> _dueList;
+  bool _isLoading = true;
 
 
   @override
   void initState() {
     _dueList = [];
-    _dueList.add(DueList('APRIL','400','220','180'));
+    getDuesList();
+/*    _dueList.add(DueList('APRIL','400','220','180'));
     _dueList.add(DueList('MAY','400','220','180'));
     _dueList.add(DueList('JUNE','400','220','180'));
-    _dueList.add(DueList('JULY','400','220','180'));
+    _dueList.add(DueList('JULY','400','220','180'));*/
     super.initState();
+  }
+//Method to get the list of teachers, currently preset in the class
+  getDuesList() async {
+    _dueList = [];
+    int totalDue = 0;
+    try {
+      ProcessDueService processDueService = ProcessDueService();
+      dynamic httpResult = await processDueService.getDue(kgetDues,widget.facultyId,widget.subject,widget.studentId);
+      String positiveStatus = 'true';
+      //failed as server end
+      if(httpResult is String){
+        EasyLoading.showToast(httpResult);
+        setState(() {
+          _isLoading = false;
+        });
+      }
+      //data fetch from server end
+      if(httpResult['status'] == positiveStatus){
+        //Data is fetch successfully
+        httpResult['data'].forEach((element){
+          _dueList.add(DueList(coversetNumtoMonth(element[PY002P.monthFld]), element[PY002P.feeFld],element[PY002P.perShareAspFld],element[PY002P.perShareFacultyFld]));
+          totalDue = totalDue + int.parse(element[PY002P.feeFld]);
+        });
+        //set the faculty name
+        _facultyNameStr = httpResult['Faculty'];
+      } else {
+        _facultyNameStr = httpResult['Faculty'];
+        EasyLoading.showToast(httpResult['message']);
+      }
+    } catch (e) {
+      EasyLoading.showToast(e);
+      setState(() {
+        _isLoading = false;
+      });
+    }
+    //finally hide the progress bar
+    setState(() {
+      _isLoading = false;
+      _totalAmountStr = totalDue.toString();
+    });
+  }
+//
+  String coversetNumtoMonth(String monthNumber){
+    String returnValue = '';
+    switch(monthNumber){
+      case "01": {
+        returnValue = 'JANUARY';
+        break;
+      }
+      case "02": {
+        returnValue = 'FEBRUARY';
+        break;
+      }
+      case "03": {
+        returnValue = 'MARCH';
+        break;
+      }
+      case "04": {
+        returnValue = 'APRIL';
+        break;
+      }
+      case "05": {
+      returnValue = 'MAY';
+      break;
+      }
+      case "06": {
+        returnValue = 'JUNE';
+        break;
+      }
+      case "07": {
+        returnValue = 'JULY';
+        break;
+      }
+      case "08": {
+        returnValue = 'AUGUST';
+        break;
+      }
+      case "09": {
+        returnValue = 'SEPTEMBER';
+        break;
+      }
+      case "10": {
+        returnValue = 'OCTOBER';
+        break;
+      }
+      case "11": {
+        returnValue = 'NOVEMBER';
+        break;
+      }
+      default: {
+        returnValue = 'DECEMBER';
+        break;
+      }
+    }
+
+    return returnValue;
   }
 
   @override
@@ -69,7 +172,7 @@ class _DueTabState extends State<DueTab> {
                 children: [
                   Align(
                     alignment: Alignment.topCenter,
-                    child: Container(
+                    child:  _isLoading ? circularProgress() : Container(
                       padding: EdgeInsets.symmetric(vertical: 5,horizontal: 5),
                       child: ListView.builder(
                         itemCount: _dueList.length,
