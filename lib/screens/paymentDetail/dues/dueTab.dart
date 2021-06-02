@@ -6,6 +6,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fabtech_aspirationclass_dev/utilites/constantValue.dart';
 import 'package:fabtech_aspirationclass_dev/models/PY002P.dart';
 import 'package:fabtech_aspirationclass_dev/utilites/widgets/progress.dart';
+import 'package:fabtech_aspirationclass_dev/utilites/getMonth.dart';
 
 class DueTab extends StatefulWidget {
   final String facultyId,subject,studentId,studentName;
@@ -50,7 +51,7 @@ class _DueTabState extends State<DueTab> {
       if(httpResult['status'] == positiveStatus){
         //Data is fetch successfully
         httpResult['data'].forEach((element){
-          _dueList.add(DueList(coversetNumtoMonth(element[PY002P.monthFld]), element[PY002P.feeFld],element[PY002P.perShareAspFld],element[PY002P.perShareFacultyFld]));
+          _dueList.add(DueList(convertNumtoMonth(element[PY002P.monthFld]), element[PY002P.feeFld],element[PY002P.perShareAspFld],element[PY002P.perShareFacultyFld]));
           totalDue = totalDue + int.parse(element[PY002P.feeFld]);
         });
         //set the faculty name
@@ -72,62 +73,6 @@ class _DueTabState extends State<DueTab> {
     });
   }
 //
-  String coversetNumtoMonth(String monthNumber){
-    String returnValue = '';
-    switch(monthNumber){
-      case "01": {
-        returnValue = 'JANUARY';
-        break;
-      }
-      case "02": {
-        returnValue = 'FEBRUARY';
-        break;
-      }
-      case "03": {
-        returnValue = 'MARCH';
-        break;
-      }
-      case "04": {
-        returnValue = 'APRIL';
-        break;
-      }
-      case "05": {
-      returnValue = 'MAY';
-      break;
-      }
-      case "06": {
-        returnValue = 'JUNE';
-        break;
-      }
-      case "07": {
-        returnValue = 'JULY';
-        break;
-      }
-      case "08": {
-        returnValue = 'AUGUST';
-        break;
-      }
-      case "09": {
-        returnValue = 'SEPTEMBER';
-        break;
-      }
-      case "10": {
-        returnValue = 'OCTOBER';
-        break;
-      }
-      case "11": {
-        returnValue = 'NOVEMBER';
-        break;
-      }
-      default: {
-        returnValue = 'DECEMBER';
-        break;
-      }
-    }
-
-    return returnValue;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(width: MediaQuery.of(context).size.width,

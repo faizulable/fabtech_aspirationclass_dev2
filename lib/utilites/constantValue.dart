@@ -15,6 +15,7 @@ const kCreateNewStudent = 'createNewStudent.php';
 const kCreateStudentSubject = 'createStudentSubject.php';
 const kRemoveStudentSubject = 'removeStudentFromSubject.php';
 const kgetDues = 'selectDues.php';
+const kgetStudentPayments = 'getStudentPayment.php';
 
 
 
