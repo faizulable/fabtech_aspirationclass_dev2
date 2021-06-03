@@ -16,10 +16,9 @@ class PaidTab extends StatefulWidget {
 }
 
 class _PaidTabState extends State<PaidTab> {
-  String _facultyNameStr = 'Teacher Name';
   String _totalAmountStr = '0000';
   List<PaidList> _paidList;
-  bool _isLoading = false;
+  bool _isLoading = true;
 
 
   @override

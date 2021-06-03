@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 
 class ListSubjectWidget extends StatelessWidget {
   final String facultyId,subject,fee,due,status,dateOfEnrol;
-  final Function crossFunction;
-  ListSubjectWidget({this.facultyId,this.subject,this.fee,this.due,this.status,this.dateOfEnrol,this.crossFunction});
+  final Function crossFunction, miscFunction;
+  ListSubjectWidget({this.facultyId,this.subject,this.fee,this.due,this.status,this.dateOfEnrol,
+    this.crossFunction,this.miscFunction});
 
   @override
   Widget build(BuildContext context) {
@@ -51,6 +52,22 @@ class ListSubjectWidget extends StatelessWidget {
                                   ),
                                 ),
                               ),
+                            ),
+                            SizedBox(width: 5.0),
+                            GestureDetector(
+                              child: Container(
+                                alignment: Alignment.centerLeft,
+                                decoration: BoxDecoration(
+                                  color: _isDefaulter ? Colors.red : Colors.teal.shade400,
+                                  borderRadius: BorderRadius.all(Radius.circular(90)),
+                                  shape: BoxShape.rectangle,
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(2.0),
+                                  child: Icon(Icons.add_box_rounded),
+                                ),
+                              ),
+                              onTap: miscFunction,
                             ),
                             SizedBox(width: 5.0),
                             (status == 'A') ? GestureDetector(

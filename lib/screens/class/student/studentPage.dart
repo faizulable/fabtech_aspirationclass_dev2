@@ -57,7 +57,7 @@ class _StudentPageState extends State<StudentPage> {
         EasyLoading.showToast(httpResult['message']);
       }
     } catch (e) {
-      EasyLoading.showToast(e);
+      EasyLoading.showToast(e.toString());
     }
     //finally hide the progress bar
     setState(() {

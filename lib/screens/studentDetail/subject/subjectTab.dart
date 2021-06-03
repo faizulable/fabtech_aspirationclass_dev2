@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:fabtech_aspirationclass_dev/utilites/widgets/topHeadline.dart';
 import 'package:fabtech_aspirationclass_dev/screens/studentDetail/subject/listWidgetSubject.dart';
 import 'package:fabtech_aspirationclass_dev/screens/paymentDetail/dues/dueTab.dart';
+import 'package:fabtech_aspirationclass_dev/screens/paymentDetail/misc/addMiscPayment.dart';
 import 'package:fabtech_aspirationclass_dev/services/studentDtls.dart';
 import 'package:fabtech_aspirationclass_dev/services/addStudentOpt.dart';
 import 'package:fabtech_aspirationclass_dev/services/addStudentSubject.dart';
@@ -187,7 +188,12 @@ class _SubjectTabState extends State<SubjectTab> {
                                   fee: subjectList[index].fee,due: subjectList[index].due,status: subjectList[index].status, dateOfEnrol: subjectList[index].dateOfenrol,
                                 crossFunction: (){
                                   crossFunction(index);
-                                }),
+                                },miscFunction: (){
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                    return AddMiscPayment(studentName: widget.studnetNameStr,studentID: widget.studentIdStr,
+                                        facultyID: subjectList[index].facultyId,subject: subjectList[index].subject,classNumber: widget.classNumStr);
+                                  }));
+                                },),
                               onTap: (){
                                 Navigator.push(context, MaterialPageRoute(builder: (context) {
                                   return DueTab(studentName: widget.studnetNameStr,studentId: widget.studentIdStr,
