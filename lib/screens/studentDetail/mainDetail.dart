@@ -19,6 +19,7 @@ class _MainDetailState extends State<MainDetail> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: header(context, 'Details'),
+      resizeToAvoidBottomInset: false,
       body: CupertinoTabScaffold(
         tabBar: CupertinoTabBar(
           backgroundColor: Colors.teal.shade100,

@@ -197,7 +197,7 @@ class _SubjectTabState extends State<SubjectTab> {
                               onTap: (){
                                 Navigator.push(context, MaterialPageRoute(builder: (context) {
                                   return DueTab(studentName: widget.studnetNameStr,studentId: widget.studentIdStr,
-                                  facultyId: subjectList[index].facultyId,subject: subjectList[index].subject);
+                                  facultyId: subjectList[index].facultyId,subject: subjectList[index].subject,classNum: widget.classNumStr);
                                 }));
                               },
                             );

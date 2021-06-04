@@ -7,10 +7,11 @@ import 'package:fabtech_aspirationclass_dev/utilites/constantValue.dart';
 import 'package:fabtech_aspirationclass_dev/models/PY002P.dart';
 import 'package:fabtech_aspirationclass_dev/utilites/widgets/progress.dart';
 import 'package:fabtech_aspirationclass_dev/utilites/getMonth.dart';
+import 'package:fabtech_aspirationclass_dev/screens/paymentDetail/addPayment/addPayment.dart';
 
 class DueTab extends StatefulWidget {
-  final String facultyId,subject,studentId,studentName;
-  DueTab({this.facultyId,this.subject,this.studentId,this.studentName});
+  final String facultyId,subject,studentId,studentName,classNum;
+  DueTab({this.facultyId,this.subject,this.studentId,this.studentName,this.classNum});
   @override
   _DueTabState createState() => _DueTabState();
 }
@@ -159,6 +160,9 @@ class _DueTabState extends State<DueTab> {
                 child: Text('Add Payment'),
                 onPressed: () async {
                   //TODO need to add code for accept payment
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return AddPayment(studentName: widget.studentName);
+                  }));
                 },
               ),
             ),
