@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fabtech_aspirationclass_dev/utilites/widgets/header.dart';
+import 'package:fabtech_aspirationclass_dev/utilites/widgets/topHeadline.dart';
 import 'package:fabtech_aspirationclass_dev/services/classFacultyStdList.dart';
 import 'package:fabtech_aspirationclass_dev/main.dart';
 import 'package:fabtech_aspirationclass_dev/models/appPref.dart';
@@ -8,7 +8,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fabtech_aspirationclass_dev/models/ST001P.dart';
 import 'package:fabtech_aspirationclass_dev/models/ST002P.dart';
 import 'package:fabtech_aspirationclass_dev/utilites/widgets/progress.dart';
-import 'package:fabtech_aspirationclass_dev/screens/class/faculty/listWidgetFacStd.dart';
+import 'package:fabtech_aspirationclass_dev/screens/facultyDetail/facultyStudents/listWidgetFacStd.dart';
 
 
 class FacultyStudentPage extends StatefulWidget {
@@ -78,9 +78,7 @@ class _FacultyStudentPageState extends State<FacultyStudentPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: header(context, widget.subject),
-      body: Container(
+    return Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
         decoration: BoxDecoration(
@@ -93,68 +91,7 @@ class _FacultyStudentPageState extends State<FacultyStudentPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Container(
-              margin: EdgeInsets.symmetric(vertical: 5,horizontal: 7),
-              height: 110.0,
-              decoration: BoxDecoration(
-                color: Colors.teal.shade100,
-                borderRadius: BorderRadius.all(Radius.circular(25)),
-                shape: BoxShape.rectangle,
-              ),
-              child: SingleChildScrollView(
-                child: Row(
-                  children: [
-                    Container(
-                      margin: EdgeInsets.symmetric(vertical: 5,horizontal: 5.0),
-                      width: 100.0,
-                      height: 100.0,
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          image: DecorationImage(
-                              image: AssetImage('images/emblame.png'),
-                              fit: BoxFit.fill
-                          ),
-                          shape: BoxShape.circle
-                      ),
-                    ),
-                    Expanded(
-                      child: Container(
-                        width: 280,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              child: Center(
-                                child: Text(widget.facultyName,
-                                  textAlign: TextAlign.center,
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                    fontSize: 25,
-                                    fontFamily: 'LemonMilkBold',
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Container(
-                              width: 250,
-                              child: Center(
-                                child: Text('CLASS '+ widget.classNum,
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    fontFamily: 'LandasansMedium',
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+            topContainer(widget.facultyName,'CLASS ' + widget.classNum),
             Container(
               margin: EdgeInsets.symmetric(vertical: 5,horizontal: 7),
               padding: EdgeInsets.symmetric(vertical: 10,horizontal: 5),
@@ -194,8 +131,7 @@ class _FacultyStudentPageState extends State<FacultyStudentPage> {
             ),
           ],
         ),
-      ),
-    );
+      );
   }
 
 }

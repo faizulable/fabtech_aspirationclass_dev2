@@ -8,7 +8,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fabtech_aspirationclass_dev/models/FC001P.dart';
 import 'package:fabtech_aspirationclass_dev/utilites/widgets/progress.dart';
 import 'package:fabtech_aspirationclass_dev/screens/class/faculty/listWidgetFac.dart';
-import 'package:fabtech_aspirationclass_dev/screens/class/faculty/facultyStudentPage.dart';
+import 'package:fabtech_aspirationclass_dev/screens/facultyDetail/facultyMainDetail.dart';
 
 
 class FacultyPage extends StatefulWidget {
@@ -163,7 +163,7 @@ class _FacultyPageState extends State<FacultyPage> {
                     onTap: (){
                       //Navigate to new page
                       Navigator.push(context, MaterialPageRoute(builder: (context) {
-                        return FacultyStudentPage(classNum: widget.classNum,
+                        return FacultyMainDetail(classNum: widget.classNum,
                           subject: facultyViewList[index].subject,facultyName: facultyViewList[index].name,
                         facultyId: facultyViewList[index].facultyId);
                       }));
