@@ -10,8 +10,8 @@ import 'package:fabtech_aspirationclass_dev/utilites/getMonth.dart';
 import 'package:fabtech_aspirationclass_dev/screens/paymentDetail/addPayment/addPayment.dart';
 
 class DueTab extends StatefulWidget {
-  final String facultyId,subject,studentId,studentName,classNum;
-  DueTab({this.facultyId,this.subject,this.studentId,this.studentName,this.classNum});
+  final String facultyId,subject,studentId,studentName,classNum,subjectFee;
+  DueTab({this.facultyId,this.subject,this.studentId,this.studentName,this.classNum,this.subjectFee});
   @override
   _DueTabState createState() => _DueTabState();
 }
@@ -159,10 +159,15 @@ class _DueTabState extends State<DueTab> {
                 //icon: Icon(Icons.exit_to_app_rounded),
                 child: Text('Add Payment'),
                 onPressed: () async {
-                  //TODO need to add code for accept payment
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return AddPayment(studentName: widget.studentName);
-                  }));
+                  bool result = await Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return AddPayment(studentName: widget.studentName,subjectFee: widget.subjectFee,
+                      studentID: widget.studentId,facultyID: widget.facultyId,
+                        subject: widget.subject,classNbr: widget.classNum);
+                  })) ?? false;
+                  // Payment is successfully accepted
+                  if(result){
+                    Navigator.pop(context);
+                  }
                 },
               ),
             ),

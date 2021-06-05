@@ -17,6 +17,8 @@ const kRemoveStudentSubject = 'removeStudentFromSubject.php';
 const kgetDues = 'selectDues.php';
 const kgetStudentPayments = 'getStudentPayment.php';
 const kCreateMiscPayments = 'addMiscPayment.php';
+const kGetPaymentAdDue = 'selectPaymentAndDue.php';
+const kCreateMonthlyPayments = 'addMonthPayment.php';
 
 
 

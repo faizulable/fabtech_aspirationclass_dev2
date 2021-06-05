@@ -75,7 +75,9 @@ class _SubjectTabState extends State<SubjectTab> {
           if(element[ST002P.statusFld] == 'A'){
             totalAmount = totalAmount + int.parse(element[ST002P.feeFld]);
           }
-          totalDues = totalDues + int.parse(element[ST002P.dueFld]);
+          if(int.parse(element[ST002P.dueFld]) > 0){
+            totalDues = totalDues + int.parse(element[ST002P.dueFld]);
+          }
         });
       }
       else {
@@ -197,7 +199,8 @@ class _SubjectTabState extends State<SubjectTab> {
                               onTap: (){
                                 Navigator.push(context, MaterialPageRoute(builder: (context) {
                                   return DueTab(studentName: widget.studnetNameStr,studentId: widget.studentIdStr,
-                                  facultyId: subjectList[index].facultyId,subject: subjectList[index].subject,classNum: widget.classNumStr);
+                                  facultyId: subjectList[index].facultyId,subject: subjectList[index].subject,
+                                      classNum: widget.classNumStr,subjectFee: subjectList[index].fee);
                                 }));
                               },
                             );
