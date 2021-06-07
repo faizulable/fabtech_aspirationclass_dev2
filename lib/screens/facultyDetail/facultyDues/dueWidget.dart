@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:fabtech_aspirationclass_dev/utilites/getMonth.dart';
 
-class PaidWidget extends StatelessWidget {
-  final String studentId,name,month,fees,date;
-  PaidWidget({this.studentId,this.name,this.month,this.fees,this.date,});
-
+class DueWidget extends StatelessWidget {
+  final String studentId,name,month,fees,session;
+  DueWidget({this.studentId,this.name,this.month,this.fees,this.session});
   @override
   Widget build(BuildContext context) {
-    String details = name + ' '  + convertNumtoMonth(month) + ' ' + date ;
-
+    String details = name + ' '  + convertNumtoMonth(month) + ' ' + session ;
     return Center(
       child: Card(
         elevation: 5.0,
