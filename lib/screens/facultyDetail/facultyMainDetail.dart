@@ -48,7 +48,8 @@ class _FacultyMainDetailState extends State<FacultyMainDetail> {
             );
           } else if (index == 1){
             return  CupertinoTabView(
-              builder: (BuildContext context) => FacultyPaidTab(),
+              builder: (BuildContext context) => FacultyPaidTab(classNum: widget.classNum,subject: widget.subject,
+                  facultyId: widget.facultyId,facultyName: widget.facultyName),
             );
           } else {
             return  CupertinoTabView(

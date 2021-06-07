@@ -19,6 +19,7 @@ const kgetStudentPayments = 'getStudentPayment.php';
 const kCreateMiscPayments = 'addMiscPayment.php';
 const kGetPaymentAdDue = 'selectPaymentAndDue.php';
 const kCreateMonthlyPayments = 'addMonthPayment.php';
+const kgetFacultyPayments = 'getFacultyPayment.php';
 
 
 
