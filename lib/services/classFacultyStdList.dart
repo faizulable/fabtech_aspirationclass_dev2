@@ -66,10 +66,10 @@ class ClassFacultyStdListService {
       map[FC001P.facultyFld] = facultyId;
       map[FC001P.subjectFld] = subject;
       map[FC001P.classNumFld] = classNum;
-      print(map);
+      //print(map);
       final response = await http.post(url, body: map);
       if (response.statusCode == 200) {
-        print(response.body);
+        //print(response.body);
         return jsonDecode(response.body);
       } else {
         return "No Data";

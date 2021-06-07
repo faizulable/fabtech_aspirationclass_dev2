@@ -256,7 +256,7 @@ class _FacultyPaidTabState extends State<FacultyPaidTab> {
         break;
       }
       case "FEB": {
-        returnValue = 'O2';
+        returnValue = '02';
         break;
       }
       case "MAR": {
@@ -279,7 +279,7 @@ class _FacultyPaidTabState extends State<FacultyPaidTab> {
         returnValue = '07';
         break;
       }
-      case "JLY": {
+      case "AUG": {
         returnValue = '08';
         break;
       }
