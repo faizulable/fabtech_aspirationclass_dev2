@@ -32,7 +32,6 @@ class _AddPaymentState extends State<AddPayment> {
   List<PaidList> _paidList = [];
   List<MonthList> _selectedMonth = [];
   bool _isLoading = true;
-  bool _isSave = false;
 
   String _feeApr = '';
   String _feeMay = '';
@@ -937,7 +936,7 @@ class _AddPaymentState extends State<AddPayment> {
                   ),
                   Container(
                     margin: EdgeInsets.only(top: 5.0),
-                    child: _isSave ? circularProgress() : ElevatedButton(
+                    child: _isLoading ? circularProgress() : ElevatedButton(
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all<Color>(Colors.teal.shade400),
                         shape: MaterialStateProperty.all<OutlinedBorder>(
@@ -956,7 +955,7 @@ class _AddPaymentState extends State<AddPayment> {
                             bool confirm = await confirmationDialog(context,'Do you want to save this Payment transaction ?');
                             if(confirm){
                                 setState(() {
-                                  _isSave = true;
+                                  _isLoading = true;
                                 });
                                 String jsonMonthList = jsonEncode(_selectedMonth);
                                 //print(jsonMonthList);
@@ -965,7 +964,7 @@ class _AddPaymentState extends State<AddPayment> {
                                   Navigator.pop(context,result);
                                 } else {
                                   setState(() {
-                                    _isSave = false;
+                                    _isLoading = false;
                                   });
                                 }
                             }

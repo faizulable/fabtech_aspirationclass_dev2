@@ -58,7 +58,7 @@ class ListWidget extends StatelessWidget {
                             Text('Contact: ',
                               style: subHeadingTextStyle,
                             ),
-                            Text(contact,
+                            SelectableText(contact,
                               style: subValueTextStyle,
                             ),
                             SizedBox(width: 5.0),
