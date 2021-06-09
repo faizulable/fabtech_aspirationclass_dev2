@@ -40,7 +40,7 @@ class ListWidget extends StatelessWidget {
                           ),
                           child: Padding(
                             padding: const EdgeInsets.all(5.0),
-                            child: Text(studentId,
+                            child: SelectableText(studentId,
                             style: studentIdTextStyle,
                             ),
                           ),

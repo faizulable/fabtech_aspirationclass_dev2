@@ -36,7 +36,7 @@ class PaidListWidget extends StatelessWidget {
                           ),
                           child: Padding(
                             padding: const EdgeInsets.all(5.0),
-                            child: Text(refNum,
+                            child: SelectableText(refNum,
                             style: studentIdTextStyle,
                             ),
                           ),
