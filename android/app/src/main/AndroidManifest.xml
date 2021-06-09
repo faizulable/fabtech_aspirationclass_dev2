@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
    <application
         android:usesCleartextTraffic="true"
-        android:label="fabtech_aspirationclass_dev"
+        android:label="Aspiration Billing Dev"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
