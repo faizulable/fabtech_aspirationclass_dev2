@@ -1,9 +1,8 @@
-//--------------------THIS PAGE WILL BE OBSOLETE------------------------------//
 import 'package:flutter/material.dart';
 
-class ListWidgetFac extends StatelessWidget {
-  final String facultyId,name,subject,contact,perFacultyShare,perBranchShare;
-  ListWidgetFac({this.facultyId,this.name,this.subject,this.contact,this.perFacultyShare,this.perBranchShare});
+class ListWidgetFacSub extends StatelessWidget {
+  final String subject,perFacultyShare,perBranchShare,status;
+  ListWidgetFacSub({this.subject,this.perFacultyShare,this.perBranchShare,this.status});
 
   @override
   Widget build(BuildContext context) {
@@ -14,9 +13,9 @@ class ListWidgetFac extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(20)),
         ),
-        color: Colors.teal.shade100,
+        color: (status == 'A') ? Colors.teal.shade100 : Colors.grey,
         child: SizedBox(
-          height: 120.0,
+          height: 90.0,
           child: Stack(
             children: [
               Align(
@@ -36,35 +35,14 @@ class ListWidgetFac extends StatelessWidget {
                           ),
                           child: Padding(
                             padding: const EdgeInsets.all(5.0),
-                            child: Text(facultyId,
+                            child: Text(subject,
                             style: studentIdTextStyle,
                             ),
-                          ),
-                        ),
-                        SizedBox(height: 5.0),
-                        Container(
-                          alignment: Alignment.centerLeft,
-                          child: Text(name,
-                            style: studentNameTextStyle,
-                          ),
-                        ),
-                        SizedBox(height: 5.0),
-                        Container(
-                          alignment: Alignment.centerLeft,
-                          child: Text(subject,
-                            style: studentIdTextStyle,
                           ),
                         ),
                         SizedBox(height: 5.0),
                         Row(
                           children: [
-                            Text('Contact: ',
-                              style: subHeadingTextStyle,
-                            ),
-                            Text(contact,
-                              style: subValueTextStyle,
-                            ),
-                            SizedBox(width: 5.0),
                             Text('FacShare(%) : ',
                               style: subHeadingTextStyle,
                             ),
@@ -96,23 +74,18 @@ class ListWidgetFac extends StatelessWidget {
 //Text Styling
 const studentIdTextStyle = TextStyle(
   color: Colors.black,
-  fontSize: 20,
+  fontSize: 30,
   fontFamily: 'Swansea',
-);
-const studentNameTextStyle = TextStyle(
-  color: Colors.black,
-  fontSize: 20,
-  fontFamily: 'LemonMilkBold',
 );
 
 const subValueTextStyle = TextStyle(
   color: Colors.black54,
-  fontSize: 18,
+  fontSize: 25,
   fontFamily: 'LandasansMedium',
 );
 
 const subHeadingTextStyle = TextStyle(
   color: Colors.black,
-  fontSize: 18,
+  fontSize: 25,
   fontFamily: 'LandasansMedium',
 );

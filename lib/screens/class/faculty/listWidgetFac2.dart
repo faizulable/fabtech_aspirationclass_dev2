@@ -1,9 +1,8 @@
-//--------------------THIS PAGE WILL BE OBSOLETE------------------------------//
 import 'package:flutter/material.dart';
 
-class ListWidgetFac extends StatelessWidget {
-  final String facultyId,name,subject,contact,perFacultyShare,perBranchShare;
-  ListWidgetFac({this.facultyId,this.name,this.subject,this.contact,this.perFacultyShare,this.perBranchShare});
+class ListWidgetFac2 extends StatelessWidget {
+  final String facultyId,name,contact,status;
+  ListWidgetFac2({this.facultyId,this.name,this.contact,this.status});
 
   @override
   Widget build(BuildContext context) {
@@ -14,9 +13,9 @@ class ListWidgetFac extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(20)),
         ),
-        color: Colors.teal.shade100,
+        color: (status == 'A') ? Colors.teal.shade100 : Colors.grey,
         child: SizedBox(
-          height: 120.0,
+          height: 100.0,
           child: Stack(
             children: [
               Align(
@@ -45,40 +44,17 @@ class ListWidgetFac extends StatelessWidget {
                         Container(
                           alignment: Alignment.centerLeft,
                           child: Text(name,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                             style: studentNameTextStyle,
                           ),
                         ),
                         SizedBox(height: 5.0),
                         Container(
                           alignment: Alignment.centerLeft,
-                          child: Text(subject,
+                          child: SelectableText(contact,
                             style: studentIdTextStyle,
                           ),
-                        ),
-                        SizedBox(height: 5.0),
-                        Row(
-                          children: [
-                            Text('Contact: ',
-                              style: subHeadingTextStyle,
-                            ),
-                            Text(contact,
-                              style: subValueTextStyle,
-                            ),
-                            SizedBox(width: 5.0),
-                            Text('FacShare(%) : ',
-                              style: subHeadingTextStyle,
-                            ),
-                            Text(perFacultyShare,
-                              style: subValueTextStyle,
-                            ),
-                            SizedBox(width: 5.0),
-                            Text('AspShare(%) : ',
-                              style: subHeadingTextStyle,
-                            ),
-                            Text(perBranchShare,
-                              style: subValueTextStyle,
-                            ),
-                          ],
                         ),
                       ],
                     ),

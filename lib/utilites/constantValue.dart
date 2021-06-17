@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-//const kRootlink = "http://192.168.0.109/AspirationClasses/";
-const kRootlink = "https://www.augendtech.com/AspirationClassesBillingDev/";
+const kRootlink = "http://192.168.0.109/AspirationClasses/";
+//const kRootlink = "https://www.augendtech.com/AspirationClassesBillingDev/";
 const kRegisterUser = 'registration.php';
 const kDeleteRegRequest = 'deleteRegReqst.php';
 const kSignIn = 'signIn.php';
@@ -22,7 +22,8 @@ const kGetPaymentAdDue = 'selectPaymentAndDue.php';
 const kCreateMonthlyPayments = 'addMonthPayment.php';
 const kgetFacultyPayments = 'getFacultyPayment.php';
 const kgetFacultyDues = 'getFacultyDues.php';
-
+const kClassSelectFaculty2 = 'selectClassFaculty2.php';
+const kGetClassFacultySub = 'selectClassFacultySubject.php';
 
 
 const inputEmailDecoration = InputDecoration(

@@ -1,7 +1,6 @@
-//--------------------THIS PAGE WILL BE OBSOLETE------------------------------//
-
 import 'package:flutter/material.dart';
 import 'package:fabtech_aspirationclass_dev/utilites/widgets/header.dart';
+import 'package:fabtech_aspirationclass_dev/utilites/widgets/topHeadline.dart';
 import 'package:fabtech_aspirationclass_dev/services/classFacultyList.dart';
 import 'package:fabtech_aspirationclass_dev/main.dart';
 import 'package:fabtech_aspirationclass_dev/models/appPref.dart';
@@ -9,18 +8,17 @@ import 'package:fabtech_aspirationclass_dev/utilites/constantValue.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fabtech_aspirationclass_dev/models/FC001P.dart';
 import 'package:fabtech_aspirationclass_dev/utilites/widgets/progress.dart';
-import 'package:fabtech_aspirationclass_dev/screens/class/faculty/listWidgetFac.dart';
-import 'package:fabtech_aspirationclass_dev/screens/facultyDetail/facultyMainDetail.dart';
+import 'package:fabtech_aspirationclass_dev/screens/class/faculty/listWidgetFac2.dart';
+import 'package:fabtech_aspirationclass_dev/screens/class/faculty/facultySubject.dart';
 
-
-class FacultyPage extends StatefulWidget {
+class FacultyPage2 extends StatefulWidget {
   final String classNum;
-  FacultyPage({this.classNum});
+  FacultyPage2({this.classNum});
   @override
-  _FacultyPageState createState() => _FacultyPageState();
+  _FacultyPage2State createState() => _FacultyPage2State();
 }
 
-class _FacultyPageState extends State<FacultyPage> {
+class _FacultyPage2State extends State<FacultyPage2> {
   List<FacultyList> facultyList;
   List<FacultyList> facultyViewList;
   bool _isloading = true;
@@ -39,7 +37,7 @@ class _FacultyPageState extends State<FacultyPage> {
     try
     {
       ClassFacultyListService classFacultyListService = ClassFacultyListService(branchId: sp.getString(AppPref.userIdPref),classNum: widget.classNum);
-      dynamic httpResult = await classFacultyListService.selectFacultyReq(kClassSelectFaculty);
+      dynamic httpResult = await classFacultyListService.selectFacultyReq(kClassSelectFaculty2);
       String possitiveStatus = 'true';
       //failed as server end
       if(httpResult is String){
@@ -49,8 +47,8 @@ class _FacultyPageState extends State<FacultyPage> {
       if(httpResult['status'] == possitiveStatus) {
         //Data i-s fetch successfully
         httpResult['data'].forEach((element){
-          facultyList.add(FacultyList(element[FC001P.facultyFld],element[FC001P.nameFld],element[FC001P.subjectFld],
-              element[FC001P.contactNumberFld],element[FC001P.perShareFacultyFld],element[FC001P.perShareBranchFld]));
+          facultyList.add(FacultyList(element[FC001P.facultyFld],element[FC001P.nameFld],element[FC001P.contactNumberFld],
+              element[FC001P.statusFld]));
         });
         facultyViewList.addAll(facultyList);
       }
@@ -69,7 +67,7 @@ class _FacultyPageState extends State<FacultyPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: header(context, 'Faculty'),
+      appBar: header(context, 'Faculties'),
       body: Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
@@ -83,7 +81,7 @@ class _FacultyPageState extends State<FacultyPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Container(
+            /*Container(
               margin: EdgeInsets.symmetric(vertical: 5,horizontal: 7),
               height: 110.0,
               decoration: BoxDecoration(
@@ -142,7 +140,8 @@ class _FacultyPageState extends State<FacultyPage> {
                   ],
                 ),
               ),
-            ),
+            ),*/
+            topContainer('CLASS ' + widget.classNum, sp.getString(AppPref.userNamePref)),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 5,horizontal: 10),
               child: Center(
@@ -159,14 +158,12 @@ class _FacultyPageState extends State<FacultyPage> {
                 itemCount: facultyViewList.length,
                 itemBuilder: (BuildContext context, int index){
                   return GestureDetector(
-                    child: ListWidgetFac(facultyId: facultyViewList[index].facultyId,name: facultyViewList[index].name,
-                        subject: facultyViewList[index].subject, contact: facultyViewList[index].contact,
-                        perFacultyShare: facultyViewList[index].perFacultyShare,perBranchShare: facultyViewList[index].perBranchShare),
+                    child: ListWidgetFac2(facultyId: facultyViewList[index].facultyId,name: facultyViewList[index].name,
+                        contact: facultyViewList[index].contact, status: facultyViewList[index].status),
                     onTap: (){
-                      //Navigate to new page
                       Navigator.push(context, MaterialPageRoute(builder: (context) {
-                        return FacultyMainDetail(classNum: widget.classNum,
-                          subject: facultyViewList[index].subject,facultyName: facultyViewList[index].name,
+                        return FacultySubjectPage(classNum: widget.classNum,
+                            facultyName: facultyViewList[index].name,facultyContactNbr: facultyViewList[index].contact,
                         facultyId: facultyViewList[index].facultyId);
                       }));
                     },
@@ -212,7 +209,7 @@ class _FacultyPageState extends State<FacultyPage> {
 
 class FacultyList
 {
-  final String facultyId,name,subject,contact,perFacultyShare,perBranchShare;
-  FacultyList(this.facultyId,this.name,this.subject,this.contact,
-      this.perFacultyShare,this.perBranchShare);
+  final String facultyId,name,contact,status;
+  FacultyList(this.facultyId,this.name,this.contact,
+      this.status);
 }

@@ -8,6 +8,7 @@ class FC001P {
   static final String emailIDFld = 'EMAIL_ID';
   static final String perShareFacultyFld = 'PERC_SHARE_FAC';
   static final String perShareBranchFld = 'PERC_SHARE_BAR';
+  static final String statusFld = 'STATUS';
   static final String createUserFld = 'CREATE_USER';
   static final String createDateFld = 'CREATE_DATE';
   static final String createTimeFld = 'CREATE_TIME';

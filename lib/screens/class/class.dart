@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'student/studentPage.dart';
-import 'faculty/facultyPage.dart';
+//import 'faculty/facultyPage.dart';
+import 'faculty/facultyPage2.dart';
 
 class ClassPage extends StatefulWidget {
   final String classNum;
@@ -47,7 +48,7 @@ class _ClassPageState extends State<ClassPage> {
       body: PageView(
         children: [
           StudentPage(classNum: widget.classNum),
-          FacultyPage(classNum: widget.classNum),
+          FacultyPage2(classNum: widget.classNum),
         ],
         controller: _pageController,
         physics: NeverScrollableScrollPhysics(),
